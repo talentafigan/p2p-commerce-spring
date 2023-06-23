@@ -1,9 +1,6 @@
 package p2p.commerce.commerceapi.web.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import p2p.commerce.commerceapi.configuration.auditing.DateAll;
 
 import javax.persistence.*;
@@ -11,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user_authentication_log")

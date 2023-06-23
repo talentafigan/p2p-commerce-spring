@@ -1,5 +1,6 @@
 package p2p.commerce.commerceapi.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Admins {
     @Column(name = "username", columnDefinition = "VARCHAR(100)", nullable = false)
     private String username;
 
+    @JsonIgnore
     @Column(name = "password", columnDefinition = "VARCHAR(100)", nullable = false)
     private String password;
 
