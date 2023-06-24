@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface UserAuthenticationLogRepository extends JpaRepository<UserAuthenticationLog, Integer> {
     Optional<UserAuthenticationLog> findByUserAndCreateDateBefore(Users users, Date createDate);
     Optional<UserAuthenticationLog> findByUserAndStatus(Users users, Status status);
-    Optional<UserAuthenticationLog> findByAccessTokenAndCreateDateBefore(String accessToken, Date createDate);
+    Optional<UserAuthenticationLog> findByAccessToken(String accessToken);
     Optional<UserAuthenticationLog> findByAccessTokenAndStatus(String accessToken, Status status);
 }

@@ -28,7 +28,7 @@ public class InspectionToken {
         List<UserAuthenticationLog> tokens = userAuthenticationLogRepository.findAll();
         if (tokens==null) return;
         for (UserAuthenticationLog token : tokens) {
-            if (tokenProvider.validateToken(token.getAccessToken())) {
+            if (!tokenProvider.validateToken(token.getAccessToken())) {
                 token.setStatus(statusRepository.findById(3).get());
             }
         }

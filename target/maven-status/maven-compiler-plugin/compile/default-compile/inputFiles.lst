@@ -5,6 +5,7 @@ C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commer
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\model\Admins.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\model\Sellers.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\dto\RegisterRequest.java
+C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\dto\ProfileResponse.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\CommerceApiApplication.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\model\ProductTransactions.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\data\UserDetailsServiceImpl.java
@@ -16,6 +17,7 @@ C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commer
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\response\CommonResponseErr.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\controller\ClientController.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\dto\LoginRequest.java
+C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\dto\LoginResponse.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\repository\UserTypeRepository.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\repository\SellesRepository.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\model\Clients.java
@@ -25,6 +27,7 @@ C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commer
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\init_token\exception\AccessDenied.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\web\HomeController.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\init_token\exception\Unauthorized.java
+C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\data\AuthenticationFacade.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\exception\InternalException.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\SwaggerConfig.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\repository\StatusRepository.java
@@ -43,6 +46,8 @@ C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commer
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\WebSecurityConfig.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\model\Products.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\async\InspectionToken.java
+C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\dto\RegisterResponse.java
+C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\web\controller\ProfileController.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\exception\GlobalExceptionHandler.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\data\ApplicationContextProvider.java
 C:\Users\ACER\Documents\PROJECT\SPRINGBOOT\commerce-api\src\main\java\p2p\commerce\commerceapi\configuration\SpringConfiguration.java

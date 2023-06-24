@@ -29,14 +29,12 @@ public class TokenProvider {
         this.statusRepository = statusRepository;
     }
 
-
-
     public UserAuthenticationLog generateToken(UserDetails userDetails) {
         Users user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new BussinesException("USERNAME NOT FOUND GENERATE TOKEN"));
-        Optional<UserAuthenticationLog> token = userAuthenticationLogRepository.findByUserAndStatus(user, statusRepository.findById(1).get());
-        if (token.isPresent()) {
-            return token.get();
-        }
+//        Optional<UserAuthenticationLog> token = userAuthenticationLogRepository.findByUserAndStatus(user, statusRepository.findById(1).get());
+//        if (token.isPresent()) {
+//            return token.get();
+//        }
         return userAuthenticationLogRepository.save(UserAuthenticationLog.builder()
                 .accessToken(generateRandomToken())
                 .status(statusRepository.findByStatusId(1))
@@ -48,9 +46,12 @@ public class TokenProvider {
     public boolean validateToken(String token) {
         UserAuthenticationLog tokenUser =  userAuthenticationLogRepository.findByAccessTokenAndStatus(token, statusRepository.findById(1).get()).orElse(null);
         if (tokenUser == null) return false;
-        if (tokenUser.getCreateDate().getDate() > new Date().getDate()) {
-            return  false;
-        }
+//        System.out.println(tokenUser.getCreateDate().getDate() +1);
+//        System.out.println("now date");
+//        System.out.println(new Date().getDate());
+//        if (tokenUser.getCreateDate().getDate() +1 <= new Date().getDate()) {
+//            return  false;
+//        }
         return true;
     }
     private static String generateRandomToken() {

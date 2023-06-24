@@ -27,17 +27,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
     private TokenProvider tokenProvider;
 
-    @Autowired
-    private InspectionToken inspectionToken;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = getTokenHeader(request);
             if (token != null) {
-                inspectionToken.inspectionActiveToken();
-                boolean isNotExpired = tokenProvider.validateToken(token);
-                if (isNotExpired) {
+                boolean isTokenValid = tokenProvider.validateToken(token);
+                if (isTokenValid) {
                     UserAuthenticationLog tokens = tokenProvider.getDataToken(token);
                     UserDetails userDetails = userDetailsService.loadUserByUsername(tokens.getUser().getUsername());
                     UsernamePasswordAuthenticationToken authentication

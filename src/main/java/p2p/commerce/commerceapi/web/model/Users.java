@@ -32,9 +32,6 @@ public class Users extends DateAll {
     @JoinColumn(name = "user_type_id")
     private UserType userType;
 
-    @Transient
-    private Object user;
-
     @JsonIgnore
     @Column(name = "username")
     private String username;
@@ -42,31 +39,4 @@ public class Users extends DateAll {
     @Column(name = "password")
     private String password;
 
-    @JsonIgnore
-    @Autowired
-    @Transient
-    private AdminRepository adminRepository;
-    @JsonIgnore
-    @Transient
-    @Autowired
-    private SellesRepository sellesRepository;
-    @JsonIgnore
-    @Transient
-    @Autowired
-    private ClientRepository clientRepository;
-
-    public Object getUser() {
-        try {
-            if(userType.getUserTypeName().equals("Admin")) {
-
-                return adminRepository.findByUser(this).getUsername();
-            }
-            if(userType.getUserTypeName().equals("Seller")) {
-                return sellesRepository.findByUser(this).getUsername();
-            }
-            return clientRepository.findByUser(this).getUsername();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }
