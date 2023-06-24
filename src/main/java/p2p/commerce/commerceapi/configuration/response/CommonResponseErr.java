@@ -12,9 +12,11 @@ public class CommonResponseErr<T> {
     @JsonProperty("timestamp")
     private Date timestamp = new Date();
     @JsonProperty("status")
-    private int status;
-    @JsonProperty("error")
-    private T error;
+    private String status;
+    @JsonProperty("statusCode")
+    private int statusCode;
+    @JsonProperty("message")
+    private T message;
     @JsonProperty("path")
     private Object path;
 }

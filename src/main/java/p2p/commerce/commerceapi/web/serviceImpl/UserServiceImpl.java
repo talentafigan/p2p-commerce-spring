@@ -146,6 +146,7 @@ public class UserServiceImpl implements UserService {
         String token = request.getHeader("x-token-id");
         UserAuthenticationLog authenticationLog = userAuthenticationLogRepository.findByAccessToken(token).orElse(null);
         if (authenticationLog!=null) {
+            if (authenticationLog.getUser().getUserType().getUserTypeName().equals("Admin")) return "SUCCESS";
             authenticationLog.setDeleteDate(new Date());
             authenticationLog.setStatus(statusRepository.findById(3).get());
             userAuthenticationLogRepository.save(authenticationLog);

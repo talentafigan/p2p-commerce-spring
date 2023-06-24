@@ -28,7 +28,15 @@ public class Admins {
     @Column(name = "password", columnDefinition = "VARCHAR(100)", nullable = false)
     private String password;
 
+    @Transient
+    private int userId;
+
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private Users user;
+
+    public int getUserId() {
+        return user.getUserId();
+    }
 }

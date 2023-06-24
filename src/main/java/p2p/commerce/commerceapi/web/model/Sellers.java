@@ -36,7 +36,15 @@ public class Sellers {
     @Column(name= "phone", columnDefinition = "VARCHAR(20)")
     private String phone;
 
+    @Transient
+    private int userId;
+
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private Users user;
+
+    public int getUserId() {
+        return user.getUserId();
+    }
 }

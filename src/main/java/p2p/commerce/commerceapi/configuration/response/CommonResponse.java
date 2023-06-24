@@ -12,10 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CommonResponse<T> {
     @JsonProperty("status")
-    private int status;
+    private String status;
 
-    @JsonProperty("message")
-    private String message;
+    @JsonProperty("statusCode")
+    private int statusCode;
 
     @JsonProperty("data")
     private T data;
