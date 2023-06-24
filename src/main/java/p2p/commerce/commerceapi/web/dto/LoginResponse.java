@@ -10,5 +10,4 @@ public class LoginResponse {
     private int userAuthenticationLogId;
     private String accessToken;
     private Status status;
-    private Object user;
 }

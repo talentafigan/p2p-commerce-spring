@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
         Users user = userRepository.findByUsername(loginRequest.getKey()).get();
         if (user.getUserType().getUserTypeId() != loginRequest.getUserTypeId()) throw new BussinesException("ACCESS REJECTED");
         LoginResponse response = modelMapper.map(tokenProvider.generateToken(userDetails), LoginResponse.class);
-        response.setUser(findUserData(user));
         return response;
     }
 
