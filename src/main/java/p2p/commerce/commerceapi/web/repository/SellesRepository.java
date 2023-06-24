@@ -13,5 +13,7 @@ import java.util.Optional;
 public interface SellesRepository extends JpaRepository<Sellers, Integer> {
     Optional<Sellers> findByUsername(String username);
     Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
+    Boolean existsByPhone(String phone);
     Sellers findByUser(Users users);
 }

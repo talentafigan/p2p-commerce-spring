@@ -96,9 +96,7 @@ public class UserServiceImpl implements UserService {
         usersResp = userRepository.save(usersResp);
         if (type.getUserTypeName().equals("Admin")) {
             Admins admins = modelMapper.map(registerRequest, Admins.class);
-            if (adminRepository.findByUsername(admins.getUsername()).isPresent()) {
-                throw new BussinesException("USERNAME ALREADY EXIST");
-            }
+            if (adminRepository.findByUsername(admins.getUsername()).isPresent()) throw new BussinesException("USERNAME ALREADY EXIST");
             admins.setUser(usersResp);
             admins.setPassword(passwordEncoder.encode(admins.getPassword()));
             usersResp.setUsername(admins.getUsername());
@@ -110,9 +108,9 @@ public class UserServiceImpl implements UserService {
             response.setUserType(usersResp.getUserType());
         } else if (type.getUserTypeName().equals("Seller")) {
             Sellers sellers = modelMapper.map(registerRequest, Sellers.class);
-            if (sellesRepository.findByUsername(sellers.getUsername()).isPresent()) {
-                throw new BussinesException("USERNAME ALREADY EXIST");
-            }
+            if (sellesRepository.findByUsername(sellers.getUsername()).isPresent()) throw new BussinesException("USERNAME ALREADY EXIST");
+            if (sellesRepository.existsByEmail(sellers.getEmail())) throw new BussinesException("EMAIL ALREADY EXIST");
+            if (sellesRepository.existsByPhone(sellers.getPhone())) throw new BussinesException("PHONE ALREADY EXIST");
             sellers.setUser(usersResp);
             sellers.setPassword(passwordEncoder.encode(sellers.getPassword()));
             usersResp.setUsername(sellers.getUsername());
@@ -124,9 +122,9 @@ public class UserServiceImpl implements UserService {
             response.setUserType(usersResp.getUserType());
         } else {
             Clients clients = modelMapper.map(registerRequest, Clients.class);
-            if (clientRepository.findByUsername(clients.getUsername()).isPresent()) {
-                throw new BussinesException("USERNAME ALREADY EXIST");
-            }
+            if (clientRepository.findByUsername(clients.getUsername()).isPresent()) throw new BussinesException("USERNAME ALREADY EXIST");
+            if (clientRepository.existsByEmail(clients.getEmail())) throw new BussinesException("EMAIL ALREADY EXIST");
+            if (clientRepository.existsByPhone(clients.getPhone())) throw new BussinesException("PHONE ALREADY EXIST");
             clients.setUser(usersResp);
             clients.setPassword(passwordEncoder.encode(clients.getPassword()));
             usersResp.setUsername(clients.getUsername());
