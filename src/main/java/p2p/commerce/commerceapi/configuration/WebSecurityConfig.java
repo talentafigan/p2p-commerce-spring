@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             // API controller
             "/api/login",
             "/api/register",
+            "/api/reset-password/**",
             "/"
     };
 

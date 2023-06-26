@@ -15,5 +15,6 @@ public interface SellesRepository extends JpaRepository<Sellers, Integer> {
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
     Boolean existsByPhone(String phone);
+    Optional<Sellers> findByEmail(String email);
     Sellers findByUser(Users users);
 }

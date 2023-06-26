@@ -36,6 +36,9 @@ public class Clients {
     @Column(name= "phone", columnDefinition = "VARCHAR(20)")
     private String phone;
 
+    @Column(name = "balance")
+    private int balance = 0;
+
     @Transient
     private int userId;
 
