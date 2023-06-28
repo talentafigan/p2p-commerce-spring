@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Otp Code Reset Password</title>
+    <title>Change password P2P Commerce</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css' />
@@ -20,11 +20,10 @@
     <tr>
         <td bgcolor="#eaeaea" style="padding: 40px 30px 40px 30px;">
             <p style="text-direction: none; color: black;  word-spacing: 0px">Hello, <b>${firstName}</b></p><br />
-            <p style="color: black;">Untuk mengubah kata sandi akun anda pada <span
-                        style="color: rgb(47, 47, 223); text-decoration: underline;">p2p_ecommerce.com</span>. <br />
-                silahkan ikuti tautan di bawah ini
+            <p style="color: black;">Untuk mengubah kata sandi anda<br />
+                Silahkan ikuti tautan di bawah
             </p>
-            <a href="${link}" style="font-size: 17px;"><b>${link}</b></a>
+            <a href="${link}" style="font-size: 15px;"><b>${link}</b></a>
 <#--            <br />-->
 <#--            <p style="color: black; word-spacing: 0px">Jika Anda merasa ada hal yang dapat dibantu, silahkan hubungi-->
 <#--                kami melalui <a href="https://api.whatsapp.com/send?phone=6289504731540">Whatsapp</a>.-->
