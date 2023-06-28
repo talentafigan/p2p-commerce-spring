@@ -3,6 +3,7 @@ package p2p.commerce.commerceapi.web.serviceImpl;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,12 @@ import java.util.Random;
 @Slf4j
 @Service
 public class CodeOtpServiceImpl extends EmailConfig implements CodeOtpService {
+
+    @Value("${url.app.web_seller}")
+    private String webSeller;
+
+    @Value("${url.app.web_client}")
+    private String webClient;
 
     private CodeOtpRespository codeOtpRespository;
     private SellesRepository sellesRepository;
@@ -59,13 +66,14 @@ public class CodeOtpServiceImpl extends EmailConfig implements CodeOtpService {
         }
         var alreadyCode = codeOtpRespository.findByUserAndUsedIsFalse(user);
         if (alreadyCode.isPresent()) {
-            sendingMailOtp(codeOtpRequest.getEmail(), objTemplate(user.getUsername(), alreadyCode.get().getCode()));
+            sendingMailOtp(codeOtpRequest.getEmail(), objTemplate(user.getUsername(), alreadyCode.get().getCode(), user.getUserType().getUserTypeName()), user.getUserType().getUserTypeName());
             return alreadyCode.get();
         }
         while (true) {
             String codeOtp = createTokenRandom();
             if (codeOtpRespository.findByCodeAndUsedIsFalse(codeOtp).isPresent()) continue;
-            sendingMailOtp(codeOtpRequest.getEmail(), objTemplate(user.getUsername(), codeOtp));
+            objTemplate(user.getUsername(), codeOtp, user.getUserType().getUserTypeName());
+            sendingMailOtp(codeOtpRequest.getEmail(), objTemplate(user.getUsername(), codeOtp, user.getUserType().getUserTypeName()), user.getUserType().getUserTypeName());
             return codeOtpRespository.save(CodeOtp.builder().code(codeOtp).used(false).user(user).build());
         }
 
@@ -87,12 +95,10 @@ public class CodeOtpServiceImpl extends EmailConfig implements CodeOtpService {
         Users user =resp.getUser();
         if (user.getUserType().getUserTypeName().equals("Seller")) {
             Sellers sellerData = sellesRepository.findByUser(user);
-            if (!sellerData.getEmail().equals(changePasswordRequest.getEmail())) throw new BussinesException("ERROR EMAIL");
             user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
             sellerData.setPassword(user.getPassword());
         } else {
             Clients clients = clientRepository.findByUser(user);
-            if (!clients.getEmail().equals(changePasswordRequest.getEmail())) throw new BussinesException("ERROR EMAIL");
             user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
             clients.setPassword(user.getPassword());
         }
@@ -111,10 +117,17 @@ public class CodeOtpServiceImpl extends EmailConfig implements CodeOtpService {
         return salt.toString();
     }
 
-    private Map<String, Object> objTemplate(String name, String otp) {
+    private Map<String, Object> objTemplate(String name, String otp, String typeUser) {
         Map<String, Object> template = new HashMap<>();
         template.put("firstName", name);
-        template.put("otp", otp);
+        String link = "";
+        if (typeUser.equals("Seller")) {
+            link = webSeller;
+        } else {
+            link = webClient;
+        }
+        template.put("link", link + "auth/reset-password?token=" + otp);
+
         return template;
     }
 }

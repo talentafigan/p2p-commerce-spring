@@ -25,7 +25,7 @@ public class EmailConfig {
     @Value("${spring.mail.password}")
     private String PASSWORD_SENDER;
 
-    public void sendingMailOtp(String emailTo, Map<String, Object> components) throws IOException, TemplateException, MessagingException {
+    public void sendingMailOtp(String emailTo, Map<String, Object> components,String userType) throws IOException, TemplateException, MessagingException {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
@@ -43,7 +43,7 @@ public class EmailConfig {
         String from = EMAIL_SENDER;
         helper.setTo(emailTo);
         helper.setText(html, true);
-        helper.setSubject("Otp code for password change");
+        helper.setSubject("Change password P2P Commerce (" +userType+ ")");
         helper.setFrom(from);
         mailSender.send(message);
     }

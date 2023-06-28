@@ -20,18 +20,15 @@
     <tr>
         <td bgcolor="#eaeaea" style="padding: 40px 30px 40px 30px;">
             <p style="text-direction: none; color: black;  word-spacing: 0px">Hello, <b>${firstName}</b></p><br />
-            <p style="color: black;">Terima kasih telah bergabung dengan <span
-                        style="color: rgb(47, 47, 223); text-decoration: underline;">BusTIcket.co.id</span>. Akun Anda
-                <span style="font-weight: bold;text-decoration: underline; font-size: 18px">BELUM
-                        AKTIF</span>. Untuk mengaktifkan nya silahkan masukan Kode Otorisasi ini di halaman yang sudah
-                di <a href="#">sediakan</a>
+            <p style="color: black;">Untuk mengubah kata sandi akun anda pada <span
+                        style="color: rgb(47, 47, 223); text-decoration: underline;">p2p_ecommerce.com</span>. <br />
+                silahkan ikuti tautan di bawah ini
             </p>
-            <p style="font-size: 19px; text-align: center;"><b>${otp}</b></p>
-            <br />
-            <p style="color: black; word-spacing: 0px">Jika Anda merasa ada hal yang dapat dibantu, silahkan hubungi
-                kami melalui <a href="https://api.whatsapp.com/send?phone=6289504731540">Whatsapp</a>.
-            </p>
-
+            <a href="${link}" style="font-size: 17px;"><b>${link}</b></a>
+<#--            <br />-->
+<#--            <p style="color: black; word-spacing: 0px">Jika Anda merasa ada hal yang dapat dibantu, silahkan hubungi-->
+<#--                kami melalui <a href="https://api.whatsapp.com/send?phone=6289504731540">Whatsapp</a>.-->
+<#--            </p>-->
         </td>
     </tr>
     <tr>
@@ -40,21 +37,20 @@
             <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
                 <table border="0" cellpadding="0" cellspacing="0"
                        style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
-                    <tr>
-                        <td class="content-block"
-                            style="font-family: Arial, Helvetica, sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #cfc7c7; text-align: center;">
-                                <span class="apple-link"
-                                      style="color: #cfc7c7; font-size: 12px; text-align: center;">Jl. Karangingas
-                                    No.Dalam, Tlogosari Kulon, Kec. Pedurungan, Kota Semarang, Jawa Tengah 50196</span>
-                            <br /> visit our shop <a href="http://codingschool.id/"
-                                                     style="text-decoration: underline; color: #cfc7c7; font-size: 12px; text-align: center;">Subscribe</a>.
-                        </td>
-                    </tr>
+<#--                    <tr>-->
+<#--                        <td class="content-block"-->
+<#--                            style="font-family: Arial, Helvetica, sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #cfc7c7; text-align: center;">-->
+<#--                                <span class="apple-link"-->
+<#--                                      style="color: #cfc7c7; font-size: 12px; text-align: center;">Jl. Karangingas-->
+<#--                                    No.Dalam, Tlogosari Kulon, Kec. Pedurungan, Kota Semarang, Jawa Tengah 50196</span>-->
+<#--                            <br /> visit our shop <a href="http://codingschool.id/"-->
+<#--                                                     style="text-decoration: underline; color: #cfc7c7; font-size: 12px; text-align: center;">Subscribe</a>.-->
+<#--                        </td>-->
+<#--                    </tr>-->
                     <tr>
                         <td class="content-block powered-by"
                             style="font-family: Arial, Helvetica, sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #cfc7c7; text-align: center;">
-                            Powered by <a href="http://codingschool.id/" style="color: #cfc7c7; font-size: 12px; text-align: center; text-decoration: none;">Coding
-                                School Telogosari</a>.
+                            Powered by <a href="http://codingschool.id/" style="color: #cfc7c7; font-size: 12px; text-align: center; text-decoration: none;">P2P Commerce</a>.
                         </td>
                     </tr>
                 </table>
