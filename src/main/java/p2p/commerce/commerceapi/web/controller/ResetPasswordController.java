@@ -36,7 +36,7 @@ public class ResetPasswordController {
         return ResponseHelper.ok(codeOtpService.checkActive(checkOtpRequest));
     }
 
-    @PostMapping("/new-passowrd")
+    @PostMapping("/new-password")
     public CommonResponse<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
         return ResponseHelper.ok(codeOtpService.changePassword(changePasswordRequest));
     }
