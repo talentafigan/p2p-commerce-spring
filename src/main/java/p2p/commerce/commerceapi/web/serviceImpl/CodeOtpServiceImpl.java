@@ -72,7 +72,6 @@ public class CodeOtpServiceImpl extends EmailConfig implements CodeOtpService {
         while (true) {
             String codeOtp = createTokenRandom();
             if (codeOtpRespository.findByCodeAndUsedIsFalse(codeOtp).isPresent()) continue;
-            objTemplate(user.getUsername(), codeOtp, user.getUserType().getUserTypeName());
             sendingMailOtp(codeOtpRequest.getEmail(), objTemplate(user.getUsername(), codeOtp, user.getUserType().getUserTypeName()), user.getUserType().getUserTypeName());
             return codeOtpRespository.save(CodeOtp.builder().code(codeOtp).used(false).user(user).build());
         }
