@@ -1,8 +1,8 @@
 package p2p.commerce.commerceapi.web.serviceImpl;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +24,7 @@ import java.util.Date;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private ClientRepository clientRepository;
@@ -56,22 +57,6 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
-    @Autowired
-    public UserServiceImpl(ClientRepository clientRepository, AdminRepository adminRepository, SellesRepository sellesRepository, UserRepository userRepository, UserAuthenticationLogRepository userAuthenticationLogRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserTypeRepository userTypeRepository, UserDetailsServiceImpl userDetailsService, StatusRepository statusRepository, TokenProvider tokenProvider, AuthenticationFacade authenticationFacade) {
-        this.clientRepository = clientRepository;
-        this.adminRepository = adminRepository;
-        this.sellesRepository = sellesRepository;
-        this.userRepository = userRepository;
-        this.userAuthenticationLogRepository = userAuthenticationLogRepository;
-        this.modelMapper = modelMapper;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-        this.userTypeRepository = userTypeRepository;
-        this.userDetailsService = userDetailsService;
-        this.statusRepository = statusRepository;
-        this.tokenProvider = tokenProvider;
-        this.authenticationFacade = authenticationFacade;
-    }
 
     private Object findUserData(Users user) {
         try {
@@ -154,5 +139,58 @@ public class UserServiceImpl implements UserService {
     public ProfileResponse profileMe() {
         Users user = authenticationFacade.getAuthentication();
         return ProfileResponse.builder().userId(user.getUserId()).user(findUserData(user)).build();
+    }
+
+    @Transactional
+    @Override
+    public String changePasswordProfile(ProfileChangePasswordRequest profileChangePasswordRequest) {
+        Users user = authenticationFacade.getAuthentication();
+        user.setPassword(passwordEncoder.encode(profileChangePasswordRequest.getNewPassword()));
+        if(user.getUserType().getUserTypeName().equals("Admin")) {
+            Admins admin = adminRepository.findByUser(user);
+            admin.setPassword(passwordEncoder.encode(profileChangePasswordRequest.getNewPassword()));
+            adminRepository.save(admin);
+        } else if(user.getUserType().getUserTypeName().equals("Seller")) {
+            Sellers sellers = sellesRepository.findByUser(user);
+            sellers.setPassword(passwordEncoder.encode(profileChangePasswordRequest.getNewPassword()));
+            sellesRepository.save(sellers);
+        } else {
+            Clients clients = clientRepository.findByUser(user);
+            clients.setPassword(passwordEncoder.encode(profileChangePasswordRequest.getNewPassword()));
+            clientRepository.save(clients);
+        }
+        userRepository.save(user);
+        return "PASSWORD CHANGED SUCCESSFULLY";
+    }
+
+    @Transactional
+    @Override
+    public ProfileResponse editProfile(ProfileRequest profileRequest) {
+        Users user = authenticationFacade.getAuthentication();
+        user.setUsername(profileRequest.getUsername());
+        if(user.getUserType().getUserTypeName().equals("Admin")) {
+            Admins admin = adminRepository.findByUser(user);
+            admin.setFullname(profileRequest.getFullname());
+            admin.setUsername(profileRequest.getUsername());
+            adminRepository.save(admin);
+        } else if(user.getUserType().getUserTypeName().equals("Seller")) {
+            user.setEmail(profileRequest.getEmail());
+            Sellers sellers = sellesRepository.findByUser(user);
+            sellers.setEmail(profileRequest.getEmail());
+            sellers.setFullname(profileRequest.getFullname());
+            sellers.setPhone(profileRequest.getPhone());
+            sellers.setUsername(profileRequest.getUsername());
+            sellesRepository.save(sellers);
+        } else {
+            user.setEmail(profileRequest.getEmail());
+            Clients clients = clientRepository.findByUser(user);
+            clients.setEmail(profileRequest.getEmail());
+            clients.setFullname(profileRequest.getFullname());
+            clients.setPhone(profileRequest.getPhone());
+            clients.setUsername(profileRequest.getUsername());
+            clientRepository.save(clients);
+        }
+        userRepository.save(user);
+        return profileMe();
     }
 }
