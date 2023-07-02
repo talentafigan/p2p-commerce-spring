@@ -13,7 +13,7 @@ public class AuthenticationFacade {
     private UserRepository userRepository;
 
     public Users getAuthentication() {
-        return userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
+        return userRepository.findByUsernameOrEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
     }
 
     public Authentication getAuthenticationGlobal() {

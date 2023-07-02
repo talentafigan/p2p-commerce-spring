@@ -30,7 +30,7 @@ public class TokenProvider {
     }
 
     public UserAuthenticationLog generateToken(UserDetails userDetails) {
-        Users user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new BussinesException("USERNAME NOT FOUND GENERATE TOKEN"));
+        Users user = userRepository.findByUsernameOrEmail(userDetails.getUsername()).orElseThrow(() -> new BussinesException("USERNAME NOT FOUND GENERATE TOKEN"));
 //        Optional<UserAuthenticationLog> token = userAuthenticationLogRepository.findByUserAndStatus(user, statusRepository.findById(1).get());
 //        if (token.isPresent()) {
 //            return token.get();

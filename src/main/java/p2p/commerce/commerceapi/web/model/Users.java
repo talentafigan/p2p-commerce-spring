@@ -33,6 +33,10 @@ public class Users extends DateAll {
     private UserType userType;
 
     @JsonIgnore
+    @Column(name = "email")
+    private String email;
+
+    @JsonIgnore
     @Column(name = "username")
     private String username;
     @JsonIgnore
