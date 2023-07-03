@@ -20,11 +20,26 @@ public class WalletTransaction extends DateAll {
     @Column(name = "wallet_transaction_id")
     private int walletTransactionId;
 
+    @Column(name = "transaction_id")
+    private String transactionId;
+
+    @Column(name = "total_payment")
+    private float totalPayment;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "balance")
+    private int balance;
+
+    @Column(name = "is_topup")
+    private Boolean isTopup = true;
+
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
 
     @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
-    private Users user;
+    @JoinColumn(name = "client_id", unique = true)
+    private Clients client;
 }
