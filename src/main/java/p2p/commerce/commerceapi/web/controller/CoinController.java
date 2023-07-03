@@ -14,7 +14,7 @@ public class CoinController {
     @Value("${app.coin-price}")
     private int coinPrice;
 
-    @GetMapping
+    @GetMapping("/price")
     public CommonResponse<Integer> priceCoin() {
         return ResponseHelper.ok(coinPrice);
     }
