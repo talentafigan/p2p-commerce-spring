@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public RegisterResponse register(RegisterRequest registerRequest) {
         UserType type = userTypeRepository.findById(registerRequest.getUserTypeId()).orElseThrow(() -> new BussinesException("USER TYPE ID NOT FOUND"));
-        if (userRepository.existsByEmail(registerRequest.getUsername()))
+        if (userRepository.existsByUsername(registerRequest.getUsername()))
             throw new BussinesException("USERNAME ALREADY EXIST");
         if (userRepository.existsByEmail(registerRequest.getEmail()))
             throw new BussinesException("EMAIL ALREADY EXIST");

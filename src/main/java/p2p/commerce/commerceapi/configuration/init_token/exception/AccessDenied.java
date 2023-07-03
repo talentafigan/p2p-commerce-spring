@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class AccessDenied implements AccessDeniedHandler  {
+public class AccessDenied implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

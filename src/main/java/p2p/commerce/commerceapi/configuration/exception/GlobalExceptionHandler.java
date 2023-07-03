@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BussinesException.class)
     public ResponseEntity<?> notInternalAdviceController(BussinesException bussinesException, HttpServletRequest request) {
-        System.out.println("Error");
+        System.out.println(bussinesException.getMessage());
         return ResponseHelper.err(bussinesException.getMessage(), HttpStatus.OK, request);
     }
     @ExceptionHandler(BadCredentialsException.class)

@@ -19,10 +19,10 @@ public class Wishlist extends DateCreate {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private Clients clientId;
+    private Clients client;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Products productId;
+    private Products product;
 
 }
