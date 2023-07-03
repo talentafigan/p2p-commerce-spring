@@ -52,7 +52,8 @@ public class UserServiceImpl implements UserService {
         loginRequest.setKey(loginRequest.getKey());
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getKey());
         Users user = userRepository.findByUsernameOrEmail(loginRequest.getKey()).get();
-        if (user.getUserType().getUserTypeId() != loginRequest.getUserTypeId()) throw new BussinesException("ACCESS REJECTED");
+        if (user.getUserType().getUserTypeId() != loginRequest.getUserTypeId())
+            throw new BussinesException("ACCESS REJECTED");
         LoginResponse response = modelMapper.map(tokenProvider.generateToken(userDetails), LoginResponse.class);
         return response;
     }
@@ -60,10 +61,10 @@ public class UserServiceImpl implements UserService {
 
     private Object findUserData(Users user) {
         try {
-            if(user.getUserType().getUserTypeName().equals("Admin")) {
+            if (user.getUserType().getUserTypeName().equals("Admin")) {
                 return adminRepository.findByUser(user);
             }
-            if(user.getUserType().getUserTypeName().equals("Seller")) {
+            if (user.getUserType().getUserTypeName().equals("Seller")) {
                 return sellesRepository.findByUser(user);
             }
             return clientRepository.findByUser(user);
@@ -71,12 +72,15 @@ public class UserServiceImpl implements UserService {
             throw new BussinesException("CAN'T GET USER");
         }
     }
+
     @Transactional
     @Override
     public RegisterResponse register(RegisterRequest registerRequest) {
         UserType type = userTypeRepository.findById(registerRequest.getUserTypeId()).orElseThrow(() -> new BussinesException("USER TYPE ID NOT FOUND"));
-        if (userRepository.existsByEmail(registerRequest.getUsername())) throw new BussinesException("USERNAME ALREADY EXIST");
-        if (userRepository.existsByEmail(registerRequest.getEmail())) throw new BussinesException("EMAIL ALREADY EXIST");
+        if (userRepository.existsByEmail(registerRequest.getUsername()))
+            throw new BussinesException("USERNAME ALREADY EXIST");
+        if (userRepository.existsByEmail(registerRequest.getEmail()))
+            throw new BussinesException("EMAIL ALREADY EXIST");
         Users usersResp = new Users();
         RegisterResponse response = null;
         usersResp.setUserType(type);
@@ -125,13 +129,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public String logout(HttpServletRequest request) {
         String token = request.getHeader("x-token-id");
-        UserAuthenticationLog authenticationLog = userAuthenticationLogRepository.findByAccessToken(token).orElse(null);
-        if (authenticationLog!=null) {
-            if (authenticationLog.getUser().getUserType().getUserTypeName().equals("Admin")) return "SUCCESS";
-            authenticationLog.setDeleteDate(new Date());
-            authenticationLog.setStatus(statusRepository.findById(3).get());
-            userAuthenticationLogRepository.save(authenticationLog);
-        }
+        UserAuthenticationLog authenticationLog = userAuthenticationLogRepository.findByAccessToken(token).orElseThrow(() -> new BussinesException("TOKEN NOT FOUND"));
+        if (authenticationLog.getUser().getUserType().getUserTypeName().equals("Admin")) return "SUCCESS";
+        authenticationLog.setDeleteDate(new Date());
+        authenticationLog.setStatus(statusRepository.findById(3).get());
+        userAuthenticationLogRepository.save(authenticationLog);
         return "SUCCESS";
     }
 
@@ -148,11 +150,11 @@ public class UserServiceImpl implements UserService {
         var validPassword = passwordEncoder.matches(profileChangePasswordRequest.getOldPassword(), user.getPassword());
         if (!validPassword) throw new BussinesException("OLD PASSWORD INCORRECT");
         user.setPassword(passwordEncoder.encode(profileChangePasswordRequest.getNewPassword()));
-        if(user.getUserType().getUserTypeName().equals("Admin")) {
+        if (user.getUserType().getUserTypeName().equals("Admin")) {
             Admins admin = adminRepository.findByUser(user);
             admin.setPassword(passwordEncoder.encode(profileChangePasswordRequest.getNewPassword()));
             adminRepository.save(admin);
-        } else if(user.getUserType().getUserTypeName().equals("Seller")) {
+        } else if (user.getUserType().getUserTypeName().equals("Seller")) {
             Sellers sellers = sellesRepository.findByUser(user);
             sellers.setPassword(passwordEncoder.encode(profileChangePasswordRequest.getNewPassword()));
             sellesRepository.save(sellers);
@@ -170,12 +172,12 @@ public class UserServiceImpl implements UserService {
     public ProfileResponse editProfile(ProfileRequest profileRequest) {
         Users user = authenticationFacade.getAuthentication();
         user.setUsername(profileRequest.getUsername());
-        if(user.getUserType().getUserTypeName().equals("Admin")) {
+        if (user.getUserType().getUserTypeName().equals("Admin")) {
             Admins admin = adminRepository.findByUser(user);
             admin.setFullname(profileRequest.getFullname());
             admin.setUsername(profileRequest.getUsername());
             adminRepository.save(admin);
-        } else if(user.getUserType().getUserTypeName().equals("Seller")) {
+        } else if (user.getUserType().getUserTypeName().equals("Seller")) {
             user.setEmail(profileRequest.getEmail());
             Sellers sellers = sellesRepository.findByUser(user);
             sellers.setEmail(profileRequest.getEmail());
