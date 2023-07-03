@@ -145,6 +145,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public String changePasswordProfile(ProfileChangePasswordRequest profileChangePasswordRequest) {
         Users user = authenticationFacade.getAuthentication();
+        var validPassword = passwordEncoder.matches(profileChangePasswordRequest.getOldPassword(), user.getPassword());
+        if (!validPassword) throw new BussinesException("OLD PASSWORD INCORRECT");
         user.setPassword(passwordEncoder.encode(profileChangePasswordRequest.getNewPassword()));
         if(user.getUserType().getUserTypeName().equals("Admin")) {
             Admins admin = adminRepository.findByUser(user);
