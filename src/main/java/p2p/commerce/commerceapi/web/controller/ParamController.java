@@ -8,14 +8,23 @@ import p2p.commerce.commerceapi.configuration.response.CommonResponse;
 import p2p.commerce.commerceapi.configuration.response.ResponseHelper;
 
 @RestController
-@RequestMapping("/api/coin")
-public class CoinController {
+@RequestMapping("/api")
+public class ParamController {
 
     @Value("${app.coin-price}")
     private int coinPrice;
 
-    @GetMapping("/price")
+    @Value("${app.fees}")
+    private int adminFee;
+
+    @GetMapping("/coin/price")
     public CommonResponse<Integer> priceCoin() {
         return ResponseHelper.ok(coinPrice);
     }
+
+    @GetMapping("/admin/fees")
+    public CommonResponse<Integer> adminFee() {
+        return ResponseHelper.ok(adminFee);
+    }
+
 }
