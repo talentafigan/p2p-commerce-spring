@@ -7,7 +7,11 @@ import org.springframework.stereotype.Repository;
 import p2p.commerce.commerceapi.web.model.Clients;
 import p2p.commerce.commerceapi.web.model.WalletTransaction;
 
+import java.util.Optional;
+
 @Repository
 public interface WalletTransactionRepository extends JpaRepository<WalletTransaction, Integer> {
     Page<WalletTransaction> findAllByClient(Clients clients, Pageable pageable);
+
+    Optional<WalletTransaction> findByTransactionId(String transactionId);
 }

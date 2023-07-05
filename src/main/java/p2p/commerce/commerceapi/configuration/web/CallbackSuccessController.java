@@ -5,7 +5,7 @@ import p2p.commerce.commerceapi.configuration.response.CommonResponse;
 import p2p.commerce.commerceapi.configuration.response.ResponseHelper;
 
 @RestController
-@RequestMapping("/api/callback")
+@RequestMapping("/api/payment/callback")
 public class CallbackSuccessController {
     @PostMapping
     public CommonResponse<Object> callbackPost(@RequestBody Object obj) {

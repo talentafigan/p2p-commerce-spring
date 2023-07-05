@@ -1,13 +1,11 @@
 package p2p.commerce.commerceapi.web.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import p2p.commerce.commerceapi.configuration.auditing.DateAll;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Getter
 @Setter
@@ -26,20 +24,31 @@ public class WalletTransaction extends DateAll {
     @Column(name = "total_payment")
     private float totalPayment;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "amount")
+    private int amount;
 
-    @Column(name = "balance")
-    private int balance;
-
-    @Column(name = "is_topup")
-    private Boolean isTopup = true;
+    @Column(name="type", columnDefinition = "VARCHAR(1)")
+    private String type;
 
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
 
-    @OneToOne
-    @JoinColumn(name = "client_id", unique = true)
+    @Column(name = "payment_id")
+    private String paymentId;
+
+    @Column(name = "fee")
+    private float fee;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users user;
+
+    @ManyToOne
+    @JoinColumn(name = "transaction_type_id")
+    private TransactionType transactionType;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Clients client;
 }
