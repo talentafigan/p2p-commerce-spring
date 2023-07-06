@@ -33,6 +33,8 @@ public class CallbackSuccessController {
         clientRepository.save(client);
     }
 
+
+
     @PostMapping
     public CommonResponse<String> callbackPost(@RequestBody CallBackDtoRequest callBackDtoRequest) {
         updateBalance(callBackDtoRequest.getExternal_id());
