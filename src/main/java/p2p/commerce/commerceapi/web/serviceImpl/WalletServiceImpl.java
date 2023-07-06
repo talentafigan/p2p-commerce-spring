@@ -56,6 +56,7 @@ public class WalletServiceImpl implements WalletService {
                 .totalPayment(topupRequest.getAmount() * paramService.priceCoin())
                 .status(statusRepository.findById(2).get())
                 .user(user)
+                .type("c")
                 .client(clients)
                 .fee(paramService.adminFee())
                 .amount(topupRequest.getAmount())

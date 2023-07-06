@@ -1,5 +1,6 @@
 package p2p.commerce.commerceapi.web.model;
 
+import com.xendit.model.Invoice;
 import lombok.*;
 import p2p.commerce.commerceapi.configuration.auditing.DateAll;
 
@@ -51,4 +52,7 @@ public class WalletTransaction extends DateAll {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Clients client;
+
+    @Transient
+    private Object invoice;
 }

@@ -58,5 +58,16 @@ public class XenditConfig {
             throw new BussinesException(e.getMessage());
         }
     }
+
+
+    public Invoice findById(String invoiceId) {
+        Xendit.Opt.setApiKey(apiKey);
+        try {
+            return Invoice.getById(invoiceId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }
 

@@ -3,6 +3,9 @@ package p2p.commerce.commerceapi.web.service;
 import org.springframework.data.domain.Page;
 import p2p.commerce.commerceapi.web.model.WalletTransaction;
 
+import java.util.Date;
+import java.util.List;
+
 public interface WalletTransactionService {
-    Page<WalletTransaction> getAll(int page, int size);
+    List<WalletTransaction> getAll(String date);
 }

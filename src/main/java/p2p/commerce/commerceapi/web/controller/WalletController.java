@@ -13,6 +13,9 @@ import p2p.commerce.commerceapi.web.model.WalletTransaction;
 import p2p.commerce.commerceapi.web.service.WalletService;
 import p2p.commerce.commerceapi.web.service.WalletTransactionService;
 
+import java.util.Date;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/wallet")
 @AllArgsConstructor
@@ -28,8 +31,8 @@ public class WalletController {
 
     @PreAuthorize("hasAuthority('Client')")
     @GetMapping("/history")
-    public CommonResponse<Page<WalletTransaction>> findTransaction(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size) {
-        return ResponseHelper.ok(walletTransactionService.getAll(page, size));
+    public CommonResponse<List<WalletTransaction>> findTransaction(@RequestParam(name = "date", defaultValue = "2023-07-06") String date) {
+        return ResponseHelper.ok(walletTransactionService.getAll(date));
     }
 
     @PreAuthorize("hasAuthority('Client')")
