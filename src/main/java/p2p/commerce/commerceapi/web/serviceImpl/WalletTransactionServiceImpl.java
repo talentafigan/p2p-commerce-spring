@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import p2p.commerce.commerceapi.configuration.XenditConfig;
 import p2p.commerce.commerceapi.configuration.data.AuthenticationFacade;
 import p2p.commerce.commerceapi.web.model.Clients;
@@ -39,10 +40,16 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
     public List<WalletTransaction> getAll(String date) {
         Users user= authenticationFacade.getAuthentication();
         Clients clients = clientRepository.findByUser(user);
-            return walletTransactionRepository.findAllByClientQ(clients.getClientId(), date).stream().map(e -> {
+        if (StringUtils.isEmpty(date)) {
+            return walletTransactionRepository.findFirst5ByClientOrderByCreateDateDesc(clients).stream().map(e -> {
                 e.setInvoice(xenditConfig.findById(e.getPaymentId()));
                 return e;
             }).collect(Collectors.toList());
+        }
+        return walletTransactionRepository.findAllByClientQ(clients.getClientId(), date).stream().map(e -> {
+            e.setInvoice(xenditConfig.findById(e.getPaymentId()));
+            return e;
+        }).collect(Collectors.toList());
     }
 
 

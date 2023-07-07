@@ -31,7 +31,7 @@ public class WalletController {
 
     @PreAuthorize("hasAuthority('Client')")
     @GetMapping("/history")
-    public CommonResponse<List<WalletTransaction>> findTransaction(@RequestParam(name = "date") String date) {
+    public CommonResponse<List<WalletTransaction>> findTransaction(@RequestParam(name = "date", required = false) String date) {
         return ResponseHelper.ok(walletTransactionService.getAll(date));
     }
 

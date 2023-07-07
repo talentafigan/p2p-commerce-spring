@@ -15,10 +15,10 @@ import java.util.Optional;
 @Repository
 public interface WalletTransactionRepository extends JpaRepository<WalletTransaction, Integer> {
 
-    @Query(value = "SELECT a.* FROM wallet_transactions a WHERE a.client_id = ?1 AND CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?2 , '%') ", nativeQuery = true)
+    @Query(value = "SELECT a.* FROM wallet_transactions a WHERE a.client_id = ?1 AND CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?2 , '%') ORDER BY a.created_date DESC", nativeQuery = true)
     List<WalletTransaction> findAllByClientQ(int clientId, String date);
 
-    List<WalletTransaction> findAllByClient(Clients clients);
+    List<WalletTransaction> findFirst5ByClientOrderByCreateDateDesc(Clients clients);
 
     Optional<WalletTransaction> findByTransactionId(String transactionId);
 }
