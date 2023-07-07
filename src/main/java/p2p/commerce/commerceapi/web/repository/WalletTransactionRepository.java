@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import p2p.commerce.commerceapi.web.model.Clients;
+import p2p.commerce.commerceapi.web.model.Status;
 import p2p.commerce.commerceapi.web.model.WalletTransaction;
 
 import java.util.Date;
@@ -19,6 +20,7 @@ public interface WalletTransactionRepository extends JpaRepository<WalletTransac
     List<WalletTransaction> findAllByClientQ(int clientId, String date);
 
     List<WalletTransaction> findFirst5ByClientOrderByCreateDateDesc(Clients clients);
+    List<WalletTransaction> findAllByStatus(Status status);
 
     Optional<WalletTransaction> findByTransactionId(String transactionId);
 }

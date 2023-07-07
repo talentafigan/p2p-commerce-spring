@@ -29,7 +29,7 @@ public class CallbackSuccessController {
         wlt.setStatus(statusRepository.findById(1).get());
         walletTransactionRepository.save(wlt);
         Clients client = wlt.getClient();
-        client.setBalance(wlt.getAmount());
+        client.setBalance(client.getBalance() + wlt.getAmount());
         clientRepository.save(client);
     }
 
