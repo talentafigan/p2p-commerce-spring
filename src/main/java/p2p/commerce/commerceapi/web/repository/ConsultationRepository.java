@@ -15,5 +15,6 @@ public interface ConsultationRepository extends JpaRepository<Consultations, Int
 
 
     List<Consultations> findAllByCreateDateBefore(Date date);
+    long countByStatus(Status status);
     List<Consultations> findAllByStatusAndClient(Status status, Clients clients);
 }
