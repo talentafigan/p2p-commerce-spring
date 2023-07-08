@@ -14,6 +14,7 @@ import p2p.commerce.commerceapi.web.model.Users;
 import p2p.commerce.commerceapi.web.model.WalletTransaction;
 import p2p.commerce.commerceapi.web.repository.ClientRepository;
 import p2p.commerce.commerceapi.web.repository.StatusRepository;
+import p2p.commerce.commerceapi.web.repository.TransactionTypeRepository;
 import p2p.commerce.commerceapi.web.repository.WalletTransactionRepository;
 import p2p.commerce.commerceapi.web.service.WalletTransactionService;
 
@@ -28,6 +29,7 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
     private WalletTransactionRepository walletTransactionRepository;
     private AuthenticationFacade authenticationFacade;
     private ClientRepository clientRepository;
+    private TransactionTypeRepository transactionTypeRepository;
     private StatusRepository statusRepository;
     private XenditConfig xenditConfig;
 
@@ -59,6 +61,22 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
     @Override
     public WalletTransaction findById(int id) {
         return walletTransactionRepository.findById(id).orElseThrow(() -> new BussinesException("Transaction ID NOT FOUND"));
+    }
+
+    @Transactional
+    @Override
+    public WalletTransaction createDebitConsultation(Users user, Clients clients, int amount) {
+        WalletTransaction crtWltTrns = WalletTransaction.builder()
+                .transactionType(transactionTypeRepository.findById(2).get())
+                .status(statusRepository.findById(1).get())
+                .user(user)
+                .type("d")
+                .client(clients)
+                .amount(amount)
+                .build();
+        WalletTransaction res = walletTransactionRepository.save(crtWltTrns);
+        res.setTransactionId(String.valueOf(res.getWalletTransactionId()));
+        return walletTransactionRepository.save(res);
     }
 
     @Transactional

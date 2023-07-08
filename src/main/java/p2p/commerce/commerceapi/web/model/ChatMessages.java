@@ -1,5 +1,6 @@
 package p2p.commerce.commerceapi.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class ChatMessages extends DateCreate {
     @Column(name = "attachment")
     private String attachment;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private Users creator;
@@ -37,5 +39,8 @@ public class ChatMessages extends DateCreate {
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
+
+    @Transient
+    private Object creators;
 }
 

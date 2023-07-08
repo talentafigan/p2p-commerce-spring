@@ -1,13 +1,13 @@
 package p2p.commerce.commerceapi.web.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import p2p.commerce.commerceapi.configuration.auditing.DateCreate;
 
 import javax.persistence.*;
+import java.util.UUID;
 
+@Builder
 @Entity
 @Getter
 @Setter
