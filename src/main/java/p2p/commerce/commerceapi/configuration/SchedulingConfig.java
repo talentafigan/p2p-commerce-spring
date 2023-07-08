@@ -25,6 +25,7 @@ public class SchedulingConfig {
         for (Consultations c : consultations) {
             c.setStatus(statusRepository.findById(3).get());
         }
+        consultationRepository.saveAll(consultations);
     }
 
     @Scheduled(cron = "0 0 6,23 * * *")
