@@ -7,6 +7,7 @@ import p2p.commerce.commerceapi.configuration.auditing.DateCreate;
 import javax.persistence.*;
 import java.util.UUID;
 
+@ToString
 @Builder
 @Entity
 @Getter

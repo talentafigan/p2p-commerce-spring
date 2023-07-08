@@ -14,6 +14,7 @@ import p2p.commerce.commerceapi.web.repository.*;
 import p2p.commerce.commerceapi.web.service.ChatService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -33,7 +34,15 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ChatMessages> findChatMessage(String conversationId) {
         if (!consultationRepository.existsByConversationIdAndStatus(conversationId, statusRepository.findById(1).get())) throw new BussinesException("Conversation NOT FOUND");
-        return chatRepository.findAllByConversationId(conversationId);
+        return chatRepository.findAllByConversationId(conversationId).stream().map(e -> {
+            Users user = authenticationFacade.getAuthentication();
+            if (user.getUserType().getUserTypeName().equals("Admin")) {
+                e.setCreators(adminRepository.findByUser(user));
+            } else  {
+                e.setCreators(clientRepository.findByUser(user));
+            }
+            return  e;
+        }).collect(Collectors.toList());
     }
 
     @Transactional
