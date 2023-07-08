@@ -35,7 +35,7 @@ public class ChatServiceImpl implements ChatService {
     public List<ChatMessages> findChatMessage(String conversationId) {
         if (!consultationRepository.existsByConversationIdAndStatus(conversationId, statusRepository.findById(1).get())) throw new BussinesException("Conversation NOT FOUND");
         return chatRepository.findAllByConversationId(conversationId).stream().map(e -> {
-            Users user = authenticationFacade.getAuthentication();
+            Users user = e.getCreator();
             if (user.getUserType().getUserTypeName().equals("Admin")) {
                 e.setCreators(adminRepository.findByUser(user));
             } else  {

@@ -31,7 +31,6 @@ public class ChatMessages extends DateCreate {
     @Column(name = "attachment")
     private String attachment;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private Users creator;
