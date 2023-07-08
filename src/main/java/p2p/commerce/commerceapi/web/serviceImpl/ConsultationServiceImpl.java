@@ -64,6 +64,8 @@ public class ConsultationServiceImpl implements ConsultationService {
     @Transactional(readOnly = true)
     @Override
     public List<Consultations> findAllConsultationActive() {
-        return consultationRepository.findAllByStatus(statusRepository.findById(1).get());
+        Users user = authenticationFacade.getAuthentication();
+        Clients client= clientRepository.findByUser(user);
+        return consultationRepository.findAllByStatusAndClient(statusRepository.findById(1).get(), client);
     }
 }
