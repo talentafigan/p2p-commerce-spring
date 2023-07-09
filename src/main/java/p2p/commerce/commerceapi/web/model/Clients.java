@@ -42,7 +42,6 @@ public class Clients {
     @Transient
     private int userId;
 
-    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private Users user;

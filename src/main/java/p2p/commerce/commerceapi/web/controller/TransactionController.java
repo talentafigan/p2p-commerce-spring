@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import p2p.commerce.commerceapi.configuration.response.CommonResponse;
 import p2p.commerce.commerceapi.configuration.response.ResponseHelper;
+import p2p.commerce.commerceapi.web.model.ProductTransactions;
 import p2p.commerce.commerceapi.web.model.Sellers;
 import p2p.commerce.commerceapi.web.model.WalletTransaction;
+import p2p.commerce.commerceapi.web.service.ProductTransactionService;
 import p2p.commerce.commerceapi.web.service.WalletTransactionService;
 
 import java.util.List;
@@ -18,24 +20,24 @@ import java.util.List;
 @RequestMapping("/api/transaction")
 @AllArgsConstructor
 public class TransactionController {
-    private WalletTransactionService walletTransactionService;
+    private ProductTransactionService productTransactionService;
 
     @PreAuthorize("hasAnyAuthority('Admin', 'Seller')")
     @GetMapping
-    public CommonResponse<List<WalletTransaction>> findAll() {
-        return ResponseHelper.ok(walletTransactionService.findAll());
+    public CommonResponse<List<ProductTransactions>> findAll() {
+        return ResponseHelper.ok(productTransactionService.findAll());
     }
 
     @PreAuthorize("hasAnyAuthority('Admin', 'Seller')")
     @GetMapping("/{id}")
-    public CommonResponse<WalletTransaction> findById(@PathVariable("id") int id) {
-        return ResponseHelper.ok(walletTransactionService.findById(id));
+    public CommonResponse<ProductTransactions> findById(@PathVariable("id") int id) {
+        return ResponseHelper.ok(productTransactionService.findById(id));
     }
 
 
-    @PreAuthorize("hasAuthority('Client')")
-    @GetMapping("/active")
-    public CommonResponse<List<WalletTransaction>> findAllIsActive() {
-        return ResponseHelper.ok(walletTransactionService.findAllActive());
-    }
+//    @PreAuthorize("hasAuthority('Client')")
+//    @GetMapping("/active")
+//    public CommonResponse<List<ProductTransactions>> findAllIsActive() {
+//        return ResponseHelper.ok(productTransactionService.findAllActive());
+//    }
 }

@@ -1,5 +1,6 @@
 package p2p.commerce.commerceapi.web.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/seller")
+@AllArgsConstructor
 public class SellerController {
     private SellerService sellerService;
     @PreAuthorize("hasAuthority('Admin')")
