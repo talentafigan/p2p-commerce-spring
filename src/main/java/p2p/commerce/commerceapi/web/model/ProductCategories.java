@@ -24,5 +24,5 @@ public class ProductCategories {
     private String productCategoryName;
 
     @Column(name = "product_category_parent_id")
-    private int productCategoryParentId;
+    private Integer productCategoryParentId;
 }
