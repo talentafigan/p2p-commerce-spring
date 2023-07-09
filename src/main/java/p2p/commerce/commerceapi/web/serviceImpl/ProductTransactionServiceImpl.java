@@ -6,14 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import p2p.commerce.commerceapi.configuration.data.AuthenticationFacade;
 import p2p.commerce.commerceapi.configuration.exception.BussinesException;
-import p2p.commerce.commerceapi.web.model.Clients;
-import p2p.commerce.commerceapi.web.model.ProductTransactions;
-import p2p.commerce.commerceapi.web.model.Users;
-import p2p.commerce.commerceapi.web.repository.ClientRepository;
-import p2p.commerce.commerceapi.web.repository.ProductTransactionRepository;
-import p2p.commerce.commerceapi.web.repository.ProductTransactionStatusRepository;
+import p2p.commerce.commerceapi.web.model.*;
+import p2p.commerce.commerceapi.web.repository.*;
 import p2p.commerce.commerceapi.web.service.ProductTransactionService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -24,12 +21,27 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     private ProductTransactionRepository productTransactionRepository;
     private ProductTransactionStatusRepository productTransactionStatusRepository;
     private AuthenticationFacade authenticationFacade;
+    private ProductRepository productRepository;
     private ClientRepository clientRepository;
+    private SellesRepository sellesRepository;
 
     @Transactional(readOnly = true)
     @Override
     public List<ProductTransactions> findAll() {
-        return productTransactionRepository.findAll();
+        Users user = authenticationFacade.getAuthentication();
+        if (user.getUserType().getUserTypeName().equals("Admin")) {
+            return productTransactionRepository.findAll();
+        }
+        List<ProductTransactions> productTransactions = new ArrayList<>();
+        Sellers seller = sellesRepository.findByUser(user);
+        List<Products> listProduct = productRepository.findAllBySeller(seller);
+        for (Products p:listProduct) {
+            var res = productTransactionRepository.findByProduct(p);
+            if (res.isPresent()) {
+                productTransactions.add(res.get());
+            }
+        }
+        return productTransactions;
     }
 
     @Transactional(readOnly = true)
