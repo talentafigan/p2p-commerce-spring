@@ -8,5 +8,5 @@ public interface ConsultationService {
     Consultations postConsultation();
     Consultations findById(int id);
     List<Consultations> findAllConsultation();
-    List<Consultations> findAllConsultationActive();
+    Consultations findAllConsultationActive();
 }

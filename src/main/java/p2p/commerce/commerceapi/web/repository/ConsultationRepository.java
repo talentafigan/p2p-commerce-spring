@@ -8,6 +8,7 @@ import p2p.commerce.commerceapi.web.model.Status;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ConsultationRepository extends JpaRepository<Consultations, Integer> {
@@ -16,5 +17,5 @@ public interface ConsultationRepository extends JpaRepository<Consultations, Int
 
     List<Consultations> findAllByCreateDateBefore(Date date);
     long countByStatus(Status status);
-    List<Consultations> findAllByStatusAndClient(Status status, Clients clients);
+    Optional<Consultations> findByStatusAndClient(Status status, Clients clients);
 }

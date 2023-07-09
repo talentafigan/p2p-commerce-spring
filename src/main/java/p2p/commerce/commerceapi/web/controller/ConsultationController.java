@@ -37,7 +37,7 @@ public class ConsultationController {
 
     @PreAuthorize("hasAuthority('Client')")
     @GetMapping("/active")
-    public CommonResponse<List<Consultations>> findAllConsultationActive() {
+    public CommonResponse<Consultations> findAllConsultationActive() {
         return ResponseHelper.ok(consultationService.findAllConsultationActive());
     }
 }

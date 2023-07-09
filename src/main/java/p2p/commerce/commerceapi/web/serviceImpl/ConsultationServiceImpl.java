@@ -35,6 +35,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     public Consultations postConsultation() {
         Users user = authenticationFacade.getAuthentication();
         Clients client= clientRepository.findByUser(user);
+        if (consultationRepository.findByStatusAndClient(statusRepository.findById(1).get(), client).isPresent()) throw new BussinesException("Unable to make a consultation because consultation is still available");
         if (client.getBalance() <= 0) throw new BussinesException("Your coins are not enough");
         client.setBalance(client.getBalance() - consultingFee);
         walletTransactionService.createDebitConsultation(user, client, consultingFee);
@@ -63,9 +64,9 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Consultations> findAllConsultationActive() {
+    public Consultations findAllConsultationActive() {
         Users user = authenticationFacade.getAuthentication();
         Clients client= clientRepository.findByUser(user);
-        return consultationRepository.findAllByStatusAndClient(statusRepository.findById(1).get(), client);
+        return consultationRepository.findByStatusAndClient(statusRepository.findById(1).get(), client).orElse(null);
     }
 }
