@@ -9,7 +9,11 @@ import lombok.Setter;
 @Setter
 public class AnalyticsResponse {
     private long consultation;
+    private double subConsultationPercent;
     private long transaction;
+    private long subTransaction;
     private long totalStudent;
+    private long subTotalStudent;
     private long totalMentor;
+    private long subTotalMentor;
 }

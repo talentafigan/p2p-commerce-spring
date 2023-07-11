@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 
     Optional<Users> findByUsernameOrEmail(String username);
 
+    @Query(value = "SELECT COUNT(a) FROM users a WHERE CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?1 , '%') AND a.user_type_id = ?2", nativeQuery = true)
+    long countUserCurrentMonth(String date, int userTypeId);
     Boolean existsByEmail(String email);
     Boolean existsByUsername(String username);
 }
