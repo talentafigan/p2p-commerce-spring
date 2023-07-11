@@ -46,6 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             // API controller
             "/api/login",
             "/api/register",
+            "/api/status",
+            "/api/product-transaction-status",
+            "/api/user-type",
             "/api/payment/callback",
             "/api/reset-password/**",
             "/"
@@ -56,14 +59,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new AuthTokenFilter();
     }
 
-
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
-
 
     @Bean
     @Override

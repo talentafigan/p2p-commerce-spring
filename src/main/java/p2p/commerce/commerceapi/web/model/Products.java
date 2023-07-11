@@ -33,6 +33,9 @@ public class Products extends DateAll {
     @JoinColumn(name = "product_category_id")
     private ProductCategories productCategorie;
 
+    @Column(name = "rating")
+    private int rating;
+
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
     private Sellers seller;

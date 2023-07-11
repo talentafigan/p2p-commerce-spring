@@ -47,4 +47,8 @@ public class ProductTransactions extends DateCreate {
     @ManyToOne
     @JoinColumn(name = "canceled_by")
     private Users canceledBy;
+
+    @ManyToOne
+    @JoinColumn(name = "reting_id")
+    private Rating rating;
 }

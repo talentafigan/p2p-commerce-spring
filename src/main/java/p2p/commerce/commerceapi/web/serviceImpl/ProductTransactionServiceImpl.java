@@ -32,6 +32,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
         if (user.getUserType().getUserTypeName().equals("Admin")) {
             return productTransactionRepository.findAll();
         }
+
         List<ProductTransactions> productTransactions = new ArrayList<>();
         Sellers seller = sellesRepository.findByUser(user);
         List<Products> listProduct = productRepository.findAllBySeller(seller);
