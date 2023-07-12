@@ -7,6 +7,8 @@ import lombok.Setter;
 import p2p.commerce.commerceapi.configuration.auditing.DateAll;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,7 +33,7 @@ public class Products extends DateAll {
 
     @OneToOne
     @JoinColumn(name = "product_category_id")
-    private ProductCategories productCategorie;
+    private ProductCategories productCategories;
 
     @Column(name = "rating")
     private int rating;
@@ -43,4 +45,5 @@ public class Products extends DateAll {
     @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
     private Status status;
+
 }

@@ -2,12 +2,13 @@ package p2p.commerce.commerceapi.web.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import p2p.commerce.commerceapi.configuration.response.CommonResponse;
 import p2p.commerce.commerceapi.configuration.response.ResponseHelper;
+import p2p.commerce.commerceapi.web.dto.ProductCategoryRequest;
+import p2p.commerce.commerceapi.web.dto.ProductRequest;
+import p2p.commerce.commerceapi.web.model.ProductCategories;
 import p2p.commerce.commerceapi.web.model.Products;
 import p2p.commerce.commerceapi.web.service.ProductService;
 
@@ -24,8 +25,33 @@ public class ProductController {
         return ResponseHelper.ok(productService.findAllProduct(productName, page, size));
     }
 
+    @GetMapping("/{productId}")
+    public CommonResponse<Products> getProductDetail(@PathVariable("productId") int productId) {
+        return ResponseHelper.ok(productService.productById(productId));
+    }
+
     @GetMapping("/recommendation")
     public CommonResponse<List<Products>> recommendProduct() {
         return ResponseHelper.ok(productService.recommendProduct());
     }
+    @PreAuthorize("hasAuthority('Seller')")
+    @PostMapping
+    public CommonResponse<Products> createProduct(@RequestBody ProductRequest productRequest) {
+        return ResponseHelper.ok(productService.createProduct(productRequest));
+    }
+
+    @PreAuthorize("hasAuthority('Seller')")
+    @PutMapping("/{productId}")
+    public CommonResponse<Products> updateProduct(@PathVariable("productId") int productId, @RequestBody ProductRequest productRequest) {
+        return ResponseHelper.ok(productService.updateProduct(productId, productRequest));
+    }
+
+    @PreAuthorize("hasAuthority('Seller')")
+    @DeleteMapping("/{productId}")
+    public CommonResponse<Products> deleteProduct(@PathVariable("productId") int productId) {
+        return ResponseHelper.ok(productService.deleteProduct(productId));
+    }
+
+
+
 }

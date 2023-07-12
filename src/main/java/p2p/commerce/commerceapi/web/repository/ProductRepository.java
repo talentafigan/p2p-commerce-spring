@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Products, Integer> {
     List<Products> findAllBySeller(Sellers sellers);
-    Page<Products> findAllByProductNameContainingIgnoreCaseAndStatus(String name, Status status, Pageable pageable);
+    Page<Products> findAllByProductNameContainingIgnoreCaseAndStatusAndDeleteDateIsNull(String name, Status status, Pageable pageable);
 
-    List<Products> findAllByStatusOrderByRatingDesc(Status status, Pageable pageable);
+    List<Products> findAllByDeleteDateIsNullAndStatusOrderByRatingDesc(Status status, Pageable pageable);
 }
