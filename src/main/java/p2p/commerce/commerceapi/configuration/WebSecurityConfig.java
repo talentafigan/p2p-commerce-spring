@@ -46,9 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             // API controller
             "/api/login",
             "/api/register",
-            "/api/status",
-            "/api/product-transaction-status",
-            "/api/user-type",
             "/api/payment/callback",
             "/api/reset-password/**",
             "/"
