@@ -13,9 +13,12 @@ import java.util.Optional;
 
 @Repository
 public interface ProductTransactionRepository extends JpaRepository<ProductTransactions, Integer> {
-    List<ProductTransactions> findAllByProductTransactionStatusAndClient(ProductTransactionStatus productTransactionStatus, Clients clients);
+    List<ProductTransactions> findAllByClientAndProductTransactionStatus(Clients clients, ProductTransactionStatus productTransactionStatus);
+    List<ProductTransactions> findAllByProductTransactionStatus(ProductTransactionStatus productTransactionStatus);
+
 
     @Query(value = "SELECT COUNT(a) FROM product_transactions a WHERE CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?1, '%')", nativeQuery = true)
     long countProductTransactionThisDate(String date);
-    Optional<ProductTransactions> findByProduct(Products products);
+    Optional<ProductTransactions> findByProductAndProductTransactionStatus(Products products, ProductTransactionStatus productTransactionStatus);
+
 }

@@ -1,15 +1,13 @@
 package p2p.commerce.commerceapi.web.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import p2p.commerce.commerceapi.configuration.auditing.DateCreate;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Builder
 @Entity
 @Getter
 @Setter
