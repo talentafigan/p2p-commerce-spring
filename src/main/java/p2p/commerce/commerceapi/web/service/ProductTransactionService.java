@@ -4,12 +4,16 @@ import org.springframework.transaction.annotation.Transactional;
 import p2p.commerce.commerceapi.web.dto.ProductTransactionProofRequest;
 import p2p.commerce.commerceapi.web.dto.ProductTransactionRequest;
 import p2p.commerce.commerceapi.web.dto.ProductTransactionStatusRequest;
+import p2p.commerce.commerceapi.web.dto.RatingRequest;
 import p2p.commerce.commerceapi.web.model.ProductTransactions;
 
 import java.util.List;
 
 public interface ProductTransactionService {
     List<ProductTransactions> findAll(Integer productTransactionStatusId);
+
+    ProductTransactions rating(int productTransactionId, RatingRequest ratingRequest);
+
     List<ProductTransactions> findAllActive();
     ProductTransactions findById(int productTransactionId);
 

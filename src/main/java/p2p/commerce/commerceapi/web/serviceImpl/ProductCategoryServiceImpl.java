@@ -20,8 +20,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ProductCategories> findAll() {
-        return productCategoryRepository.findAll();
+    public List<ProductCategories> findAll(Integer parentId) {
+        return productCategoryRepository.findAllByProductCategoryParentId(parentId);
     }
 
     @Transactional(readOnly = true)

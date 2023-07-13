@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import p2p.commerce.commerceapi.configuration.async.MainAsync;
 import p2p.commerce.commerceapi.configuration.data.AuthenticationFacade;
 import p2p.commerce.commerceapi.configuration.exception.BussinesException;
 import p2p.commerce.commerceapi.web.dto.ProductTransactionProofRequest;
 import p2p.commerce.commerceapi.web.dto.ProductTransactionRequest;
 import p2p.commerce.commerceapi.web.dto.ProductTransactionStatusRequest;
+import p2p.commerce.commerceapi.web.dto.RatingRequest;
 import p2p.commerce.commerceapi.web.model.*;
 import p2p.commerce.commerceapi.web.repository.*;
 import p2p.commerce.commerceapi.web.service.ProductTransactionService;
@@ -27,6 +29,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     private AuthenticationFacade authenticationFacade;
     private ProductRepository productRepository;
     private ClientRepository clientRepository;
+    private MainAsync mainAsync;
     private SellesRepository sellesRepository;
 
     @Transactional(readOnly = true)
@@ -54,6 +57,20 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
 
     }
 
+    @Override
+    public ProductTransactions rating(int productTransactionId, RatingRequest ratingRequest) {
+        if (ratingRequest.getRating() < 1 || ratingRequest.getRating() > 5) throw new BussinesException("Rating can only contain 1-5");
+        ProductTransactions productTransactions = productTransactionRepository.findById(productTransactionId).orElseThrow(() -> new BussinesException("Product Transaction ID NOT FOUND"));
+        if (productTransactions.getProductTransactionStatus().getProductTransactionStatusId() != 5) throw new BussinesException("Transaction status must be success to provide a rating");
+        productTransactions.setRating(ratingRequest.getRating());
+        productTransactions.setRatingDesctiption(ratingRequest.getRatingDescription());
+        productTransactions = productTransactionRepository.save(productTransactions);
+        mainAsync.updateRatingProduct();
+        return productTransactions;
+    }
+
+
+
     @Transactional(readOnly = true)
     @Override
     public List<ProductTransactions> findAllActive() {
@@ -75,12 +92,12 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
         Users user = authenticationFacade.getAuthentication();
         Clients clients = clientRepository.findByUser(user);
         Products products = productRepository.findById(productTransactionRequest.getProductId()).orElseThrow(() -> new BussinesException("Product ID NOT FOUND"));
-        return ProductTransactions.builder()
+        return productTransactionRepository.save(ProductTransactions.builder()
                 .product(products)
                 .amount(products.getProductPrice())
                 .productTransactionStatus(productTransactionStatusRepository.findById(1).get())
                 .client(clients)
-                .build();
+                .build());
     }
 
     @Transactional
@@ -91,7 +108,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
         if (productTransactions.getProductTransactionStatus().getProductTransactionStatusId() != 1 || productTransactions.getProductTransactionStatus().getProductTransactionStatusId() != 2) throw new BussinesException("Can't Cancel Transaction");
         productTransactions.setCanceledBy(user);
         productTransactions.setProductTransactionStatus(productTransactionStatusRepository.findById(6).get());
-        productTransactions.setCanceleDate(new Date());
+        productTransactions.setCancelDate(new Date());
         return productTransactionRepository.save(productTransactions);
     }
 

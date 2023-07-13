@@ -8,6 +8,7 @@ import p2p.commerce.commerceapi.configuration.response.ResponseHelper;
 import p2p.commerce.commerceapi.web.dto.ProductTransactionProofRequest;
 import p2p.commerce.commerceapi.web.dto.ProductTransactionRequest;
 import p2p.commerce.commerceapi.web.dto.ProductTransactionStatusRequest;
+import p2p.commerce.commerceapi.web.dto.RatingRequest;
 import p2p.commerce.commerceapi.web.model.ProductTransactions;
 import p2p.commerce.commerceapi.web.service.ProductTransactionService;
 
@@ -39,6 +40,12 @@ public class ProductTransactionController {
     @PutMapping("/proof/{productTransactionId}")
     public CommonResponse<ProductTransactions> proofTransaction(@PathVariable("productTransactionId") int productTransactionId, @RequestBody ProductTransactionProofRequest productTransactionProofRequest) {
         return ResponseHelper.ok(productTransactionService.proofTransaction(productTransactionId, productTransactionProofRequest));
+    }
+
+    @PreAuthorize("hasAuthority('Client')")
+    @PutMapping("/rating/{productTransactionId}")
+    public CommonResponse<ProductTransactions> ratingTransaction(@PathVariable("productTransactionId") int productTransactionId, @RequestBody RatingRequest ratingRequest) {
+        return ResponseHelper.ok(productTransactionService.rating(productTransactionId, ratingRequest));
     }
 
     @PreAuthorize("hasAnyAuthority('Client', 'Seller')")

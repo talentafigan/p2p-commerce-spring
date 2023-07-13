@@ -28,7 +28,7 @@ public class ProductTransactions extends DateCreate {
 
     @Column(name = "canceled_date")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date canceleDate;
+    private Date cancelDate;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -46,9 +46,9 @@ public class ProductTransactions extends DateCreate {
     @JoinColumn(name = "canceled_by")
     private Users canceledBy;
 
-    @Column(name = "reting")
-    private int reting;
+    @Column(name = "rating")
+    private int rating = 0;
 
     @Column(name = "rating_desctiption")
-    private int ratingDesctiption;
+    private String ratingDesctiption;
 }

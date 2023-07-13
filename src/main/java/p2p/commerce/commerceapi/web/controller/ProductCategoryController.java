@@ -1,10 +1,7 @@
 package p2p.commerce.commerceapi.web.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import p2p.commerce.commerceapi.configuration.response.CommonResponse;
 import p2p.commerce.commerceapi.configuration.response.ResponseHelper;
 import p2p.commerce.commerceapi.web.model.ProductCategories;
@@ -20,8 +17,8 @@ public class ProductCategoryController {
     private ProductCategoryService productCategoryService;
 
     @GetMapping
-    public CommonResponse<List<ProductCategories>> findAll() {
-        return ResponseHelper.ok(productCategoryService.findAll());
+    public CommonResponse<List<ProductCategories>> findAll(@RequestParam(name = "parentId", required = false) Integer parentId) {
+        return ResponseHelper.ok(productCategoryService.findAll(parentId));
     }
 
     @GetMapping("/{productCategoryId}")
