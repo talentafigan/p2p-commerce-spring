@@ -28,6 +28,7 @@ public class Products extends DateAll {
     @Column(name = "product_name", nullable = false)
     private String productName;
 
+    @Lob
     @Column(name = "product_description")
     private String productDescription;
 

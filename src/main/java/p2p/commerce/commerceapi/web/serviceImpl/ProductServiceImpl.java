@@ -34,10 +34,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<Products> findAllProduct(String name, int page, int size) {
+    public Page<Products> findAllProduct(String name, Integer productCategoryId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Status status = statusRepository.findById(1).get();
-        return productRepository.findAllByProductNameContainingIgnoreCaseAndStatusAndDeleteDateIsNull(name, status, pageable);
+        if (productCategoryId == null) return productRepository.findAllProductLikeWhere(name, 1, pageable);
+        else return productRepository.findAllProductLikeWhereCategory(name, productCategoryId, 1, pageable);
     }
 
     @Transactional
