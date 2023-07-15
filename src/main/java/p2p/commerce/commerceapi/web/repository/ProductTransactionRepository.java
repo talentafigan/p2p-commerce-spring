@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface ProductTransactionRepository extends JpaRepository<ProductTransactions, Integer> {
+    @Query(value = "SELECT a.* FROM product_transactions a WHERE a.product_id =1 AND a.product_transaction_status_id = COALESCE(5, a.product_transaction_status_id) LIMIT 1", nativeQuery = true)
     List<ProductTransactions> findAllByClientAndProductTransactionStatus(Clients clients, ProductTransactionStatus productTransactionStatus);
     List<ProductTransactions> findAllByProductTransactionStatus(ProductTransactionStatus productTransactionStatus);
     List<ProductTransactions> findAllByProduct(Products products);

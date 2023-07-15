@@ -21,8 +21,8 @@ public class ProductTransactionController {
     private ProductTransactionService productTransactionService;
 
     @GetMapping
-    public CommonResponse<List<ProductTransactions>> findAll(@RequestParam(name = "productTransactionStatusId", required = false) Integer productTransactionStatusId) {
-        return ResponseHelper.ok(productTransactionService.findAll(productTransactionStatusId));
+    public CommonResponse<List<ProductTransactions>> findAll(@RequestParam(name = "productName", required = false) String productName, @RequestParam(name = "create_date", required = false) String createDate, @RequestParam(name = "productTransactionStatusId", required = false) Integer productTransactionStatusId) {
+        return ResponseHelper.ok(productTransactionService.findAll(productName, createDate, productTransactionStatusId));
     }
 
     @GetMapping("/{productTransactionId}")

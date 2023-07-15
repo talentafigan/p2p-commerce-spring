@@ -18,7 +18,7 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
     @Query(value = "SELECT a.* FROM products a inner JOIN sellers s on (a.seller_id = s.seller_id)  WHERE a.product_name LIKE CONCAT('%', ?1,'%') AND a.product_description LIKE CONCAT('%', ?1,'%') AND s.username LIKE CONCAT('%', ?1,'%') AND a.seller_id = ?2", nativeQuery = true)
     Page<Products> findAllProductLikeWhere(String searchKey, int statusId, Pageable pageable);
 
-    @Query(value = "SELECT a.* FROM products a inner JOIN sellers s on (a.seller_id = s.seller_id)  WHERE a.product_name LIKE CONCAT('%', ?1,'%') AND a.product_description LIKE CONCAT('%', ?1,'%') AND s.username LIKE CONCAT('%', ?1,'%') AND a.product_category_id = ?2 AND a.seller_id = ?3", nativeQuery = true)
+    @Query(value = "SELECT a.* FROM products a inner JOIN sellers s on (a.seller_id = s.seller_id)  WHERE a.product_name LIKE CONCAT('%', ?1,'%') AND s.username LIKE CONCAT('%', ?1,'%') AND a.product_category_id = ?2 AND a.seller_id = ?3", nativeQuery = true)
     Page<Products> findAllProductLikeWhereCategory(String searchKey, int productCategoryId, int statusId, Pageable pageable);
 
     List<Products> findAllByDeleteDateIsNullAndStatusOrderByRatingDesc(Status status, Pageable pageable);

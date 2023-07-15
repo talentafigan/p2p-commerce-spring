@@ -34,7 +34,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
 
     @Transactional(readOnly = true)
     @Override
-    public List<ProductTransactions> findAll(Integer productTransactionStatusId) {
+    public List<ProductTransactions> findAll(String productName, String createDate, Integer productTransactionStatusId) {
         Users user = authenticationFacade.getAuthentication();
         if (user.getUserType().getUserTypeName().equals("Admin")) {
             return productTransactionRepository.findAllByProductTransactionStatus(productTransactionStatusRepository.findById(productTransactionStatusId).orElse(null));

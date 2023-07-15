@@ -21,8 +21,8 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public CommonResponse<Page<Products>> findAllProduct(@RequestParam(name = "searchKey", defaultValue = "", required = false) String productName, @RequestParam(name = "productCategoryId", defaultValue = "", required = false) Integer productCategoryId, @RequestParam(name = "page", defaultValue = "0", required = false) Integer page, @RequestParam(name = "size", defaultValue = "10", required = false) Integer size) {
-        return ResponseHelper.ok(productService.findAllProduct(productName, productCategoryId, page, size));
+    public CommonResponse<Page<Products>> findAllProduct(@RequestParam(name = "searchKey", defaultValue = "", required = false) String searchKey, @RequestParam(name = "productCategoryId", defaultValue = "", required = false) Integer productCategoryId, @RequestParam(name = "page", defaultValue = "0", required = false) Integer page, @RequestParam(name = "size", defaultValue = "10", required = false) Integer size) {
+        return ResponseHelper.ok(productService.findAllProduct(searchKey, productCategoryId, page, size));
     }
 
     @GetMapping("/{productId}")

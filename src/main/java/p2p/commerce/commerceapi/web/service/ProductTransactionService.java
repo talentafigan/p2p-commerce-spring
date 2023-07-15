@@ -10,7 +10,7 @@ import p2p.commerce.commerceapi.web.model.ProductTransactions;
 import java.util.List;
 
 public interface ProductTransactionService {
-    List<ProductTransactions> findAll(Integer productTransactionStatusId);
+    List<ProductTransactions> findAll(String productName, String createDate, Integer productTransactionStatusId);
 
     ProductTransactions rating(int productTransactionId, RatingRequest ratingRequest);
 
