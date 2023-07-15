@@ -20,6 +20,10 @@ public class Sellers {
     @Column(name = "seller_id")
     private int sellerId;
 
+    @Lob
+    @Column(name = "avatar")
+    private String avatar;
+
     @Column(name = "fullname", nullable = false)
     private String fullname;
 

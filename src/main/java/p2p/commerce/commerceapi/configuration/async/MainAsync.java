@@ -37,8 +37,6 @@ public class MainAsync {
                     point4 += 1;
                 } else if (p2.getRating() == 5) {
                     point5 += 1;
-                } else {
-                    continue;
                 }
             }
             try {

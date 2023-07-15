@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import p2p.commerce.commerceapi.configuration.exception.BussinesException;
+import p2p.commerce.commerceapi.web.dto.AvatarSallerRequest;
 import p2p.commerce.commerceapi.web.model.Sellers;
 import p2p.commerce.commerceapi.web.repository.SellesRepository;
 import p2p.commerce.commerceapi.web.service.SellerService;
@@ -28,5 +29,13 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public Sellers findById(int id) {
         return sellesRepository.findById(id).orElseThrow(() -> new BussinesException("Seller ID NOT FOUND"));
+    }
+
+    @Transactional
+    @Override
+        public Sellers changeAvatar(int sellerId, AvatarSallerRequest avatarSallerRequest) {
+        Sellers sellers = sellesRepository.findById(sellerId).orElseThrow(() -> new BussinesException("Seller ID NOT FOUND"));
+        sellers.setAvatar(avatarSallerRequest.getAvatar());
+        return sellesRepository.save(sellers);
     }
 }

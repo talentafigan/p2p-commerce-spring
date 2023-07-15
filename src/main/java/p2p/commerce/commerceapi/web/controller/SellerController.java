@@ -2,12 +2,10 @@ package p2p.commerce.commerceapi.web.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import p2p.commerce.commerceapi.configuration.response.CommonResponse;
 import p2p.commerce.commerceapi.configuration.response.ResponseHelper;
+import p2p.commerce.commerceapi.web.dto.AvatarSallerRequest;
 import p2p.commerce.commerceapi.web.model.Clients;
 import p2p.commerce.commerceapi.web.model.Sellers;
 import p2p.commerce.commerceapi.web.service.ClientService;
@@ -30,5 +28,11 @@ public class SellerController {
     @GetMapping("/{id}")
     public CommonResponse<Sellers> findById(@PathVariable("id") int id) {
         return ResponseHelper.ok(sellerService.findById(id));
+    }
+
+    @PreAuthorize("hasAuthority('Seller')")
+    @PostMapping("/{sellerId}/avatar")
+    public CommonResponse<Sellers> changeAvatar(@PathVariable("sellerId") int sellerId, @RequestBody AvatarSallerRequest avatarSallerRequest){
+        return ResponseHelper.ok(sellerService.changeAvatar(sellerId, avatarSallerRequest));
     }
 }

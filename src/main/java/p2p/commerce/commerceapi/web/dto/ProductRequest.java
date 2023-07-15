@@ -8,6 +8,7 @@ import lombok.Setter;
 public class ProductRequest {
     private int productPrice;
     private String productName;
+    private String image;
     private Integer productCategoryId;
     private String productDescription;
 }

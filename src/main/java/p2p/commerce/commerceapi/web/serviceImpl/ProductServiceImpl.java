@@ -61,6 +61,7 @@ public class ProductServiceImpl implements ProductService {
         Products products = productRepository.findById(productId).orElseThrow(() -> new BussinesException("PRODUCT ID NOT FOUND"));
         products.setProductName(products.getProductName());
         products.setProductPrice(productRequest.getProductPrice());
+        products.setImage(products.getImage());
         products.setProductDescription(products.getProductDescription());
         if (productRequest.getProductCategoryId() != null) {
             products.setProductCategories(productCategoryRepository.findById(productRequest.getProductCategoryId()).orElseThrow(() -> new BussinesException("Product Category ID NOT FOUND")));

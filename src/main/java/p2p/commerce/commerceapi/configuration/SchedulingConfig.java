@@ -20,7 +20,7 @@ public class SchedulingConfig {
 
     @Async
     public void checkingExpireConsultation() {
-        System.out.println("Scaduler running at " + new Date());
+        System.out.println("Scheduler running at " + new Date());
         List<Consultations> consultations = consultationRepository.findAllByCreateDateBefore(new Date());
         for (Consultations c : consultations) {
             c.setStatus(statusRepository.findById(3).get());

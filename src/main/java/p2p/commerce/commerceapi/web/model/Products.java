@@ -31,6 +31,10 @@ public class Products extends DateAll {
     @Column(name = "product_description")
     private String productDescription;
 
+    @Lob
+    @Column(name = "image")
+    private String image;
+
     @OneToOne
     @JoinColumn(name = "product_category_id")
     private ProductCategories productCategories;
