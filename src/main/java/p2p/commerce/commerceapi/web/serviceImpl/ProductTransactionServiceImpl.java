@@ -52,7 +52,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
             return productTransactions;
         } else {
             Clients clients = clientRepository.findByUser(user);
-            return  productTransactionRepository.findAllByClientAndProductTransactionStatus(clients, productTransactionStatusRepository.findById(productTransactionStatusId).orElse(null));
+            return  productTransactionRepository.findAllByClientAndProductTransactionStatus(clients.getClientId(), productName, createDate, productTransactionStatusId);
         }
 
     }

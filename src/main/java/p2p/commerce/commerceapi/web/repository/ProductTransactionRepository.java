@@ -13,8 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface ProductTransactionRepository extends JpaRepository<ProductTransactions, Integer> {
-    @Query(value = "SELECT a.* FROM product_transactions a WHERE a.product_id =1 AND a.product_transaction_status_id = COALESCE(5, a.product_transaction_status_id) LIMIT 1", nativeQuery = true)
-    List<ProductTransactions> findAllByClientAndProductTransactionStatus(Clients clients, ProductTransactionStatus productTransactionStatus);
+    @Query(value = "SELECT a.* FROM product_transactions a WHERE a.client_id = ?1 AND a.product_name LIKE CONCAT('%', ?2,'%') AND CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?3, '%') AND a.product_transaction_status_id = COALESCE(?4, a.product_transaction_status_id)", nativeQuery = true)
+    List<ProductTransactions> findAllByClientAndProductTransactionStatus(int clients,String productName,String createDate, Integer productTransactionStatus);
     List<ProductTransactions> findAllByProductTransactionStatus(ProductTransactionStatus productTransactionStatus);
     List<ProductTransactions> findAllByProduct(Products products);
 
