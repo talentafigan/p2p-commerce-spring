@@ -37,14 +37,14 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     public List<ProductTransactions> findAll(String productName, String createDate, Integer productTransactionStatusId) {
         Users user = authenticationFacade.getAuthentication();
         if (user.getUserType().getUserTypeName().equals("Admin")) {
-            return productTransactionRepository.findAllByProductTransactionStatus(productTransactionStatusRepository.findById(productTransactionStatusId).orElse(null));
+            return productTransactionRepository.findAllByAdmin(productName, createDate, productTransactionStatusId);
         }
         if (user.getUserType().getUserTypeName().equals("Seller")) {
             List<ProductTransactions> productTransactions = new ArrayList<>();
             Sellers seller = sellesRepository.findByUser(user);
             List<Products> listProduct = productRepository.findAllBySeller(seller);
             for (Products p : listProduct) {
-                var res = productTransactionRepository.findByProductAndProductTransactionStatus(p, productTransactionStatusRepository.findById(productTransactionStatusId).orElse(null));
+                var res = productTransactionRepository.findBySeller(p.getProductId(),productName, createDate, productTransactionStatusId);
                 if (res.isPresent()) {
                     productTransactions.add(res.get());
                 }
@@ -52,7 +52,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
             return productTransactions;
         } else {
             Clients clients = clientRepository.findByUser(user);
-            return  productTransactionRepository.findAllByClientAndProductTransactionStatus(clients.getClientId(), productName, createDate, productTransactionStatusId);
+            return  productTransactionRepository.findAllByClient(clients.getClientId(), productName, createDate, productTransactionStatusId);
         }
 
     }
@@ -105,20 +105,34 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     public ProductTransactions deleteTransaction(int productTransactionId) {
         Users user = authenticationFacade.getAuthentication();
         ProductTransactions productTransactions = productTransactionRepository.findById(productTransactionId).orElseThrow(() -> new BussinesException("Product Transaction ID NOT FOUND"));
-        if (productTransactions.getProductTransactionStatus().getProductTransactionStatusId() != 1 || productTransactions.getProductTransactionStatus().getProductTransactionStatusId() != 2) throw new BussinesException("Can't Cancel Transaction");
-        productTransactions.setCanceledBy(user);
-        productTransactions.setProductTransactionStatus(productTransactionStatusRepository.findById(6).get());
-        productTransactions.setCancelDate(new Date());
-        return productTransactionRepository.save(productTransactions);
+        switch (productTransactions.getProductTransactionStatus().getProductTransactionStatusId()) {
+            case 1:
+            case 2:
+            case 4:
+                productTransactions.setCanceledBy(user);
+                productTransactions.setProductTransactionStatus(productTransactionStatusRepository.findById(6).get());
+                productTransactions.setCancelDate(new Date());
+                return productTransactionRepository.save(productTransactions);
+            default:
+                throw new BussinesException("Can't Cancel Transaction");
+        }
+
     }
 
     @Transactional
     @Override
     public ProductTransactions proofTransaction(int productTransactionId, ProductTransactionProofRequest productTransactionProofRequest) {
         ProductTransactions productTransactions = productTransactionRepository.findById(productTransactionId).orElseThrow(() -> new BussinesException("Product Transaction ID NOT FOUND"));
-        productTransactions.setProof(productTransactions.getProof());
-        productTransactions.setProductTransactionStatus(productTransactionStatusRepository.findById(3).get());
-        return productTransactionRepository.save(productTransactions);
+        switch (productTransactions.getProductTransactionStatus().getProductTransactionStatusId()) {
+            case 2:
+            case 3:
+            case 4:
+                productTransactions.setProof(productTransactionProofRequest.getProof());
+                productTransactions.setProductTransactionStatus(productTransactionStatusRepository.findById(3).get());
+                return productTransactionRepository.save(productTransactions);
+            default:
+                throw new BussinesException("Can't Proof Transaction");
+        }
     }
 
     @Transactional
