@@ -23,6 +23,12 @@ public class WishlistController {
     }
 
     @PreAuthorize("hasAuthority('Client')")
+    @GetMapping("/product/{productId}")
+    public CommonResponse<Wishlist> findWishlistByProduct(@PathVariable("productId") int productId) {
+        return ResponseHelper.ok(wishlistService.findWishlistByProduct(productId));
+    }
+
+    @PreAuthorize("hasAuthority('Client')")
     @GetMapping
     public CommonResponse<Page<Wishlist>> findAll(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size) {
         return ResponseHelper.ok(wishlistService.getAll(page,size));

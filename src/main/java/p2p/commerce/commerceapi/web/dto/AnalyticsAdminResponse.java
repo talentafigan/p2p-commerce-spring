@@ -7,7 +7,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class AnalyticsResponse {
+public class AnalyticsAdminResponse {
     private long consultation;
     private double subConsultationPercent;
     private long transaction;

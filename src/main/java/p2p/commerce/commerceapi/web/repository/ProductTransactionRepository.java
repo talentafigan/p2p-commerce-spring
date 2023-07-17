@@ -24,5 +24,20 @@ public interface ProductTransactionRepository extends JpaRepository<ProductTrans
     @Query(value = "SELECT COUNT(a) FROM product_transactions a WHERE CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?1, '%')", nativeQuery = true)
     long countProductTransactionThisDate(String date);
 
+    @Query(value = "SELECT COUNT(a) FROM product_transactions a " +
+            "JOIN products p on a.product_id = p.product_id " +
+            "JOIN sellers s on p.seller_id = s.seller_id " +
+            "WHERE CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?1, '%') " +
+            "AND s.seller_id = ?2 " +
+            "AND a.product_transaction_status_id = 5", nativeQuery = true)
+    long countProductTransactionThisSeller(String date, int sellerId);
 
+
+    @Query(value = "SELECT a.* FROM product_transactions a " +
+            "JOIN products p on a.product_id = p.product_id " +
+            "JOIN sellers s on p.seller_id = s.seller_id " +
+            "WHERE CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?1, '%') " +
+            "AND s.seller_id = ?2 " +
+            "AND a.product_transaction_status_id = 5", nativeQuery = true)
+    List<ProductTransactions> amountProductTransactionThisSeller(String date, int sellerId);
 }
