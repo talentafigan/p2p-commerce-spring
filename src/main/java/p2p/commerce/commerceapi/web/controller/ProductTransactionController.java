@@ -5,10 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import p2p.commerce.commerceapi.configuration.response.CommonResponse;
 import p2p.commerce.commerceapi.configuration.response.ResponseHelper;
-import p2p.commerce.commerceapi.web.dto.ProductTransactionProofRequest;
-import p2p.commerce.commerceapi.web.dto.ProductTransactionRequest;
-import p2p.commerce.commerceapi.web.dto.ProductTransactionStatusRequest;
-import p2p.commerce.commerceapi.web.dto.RatingRequest;
+import p2p.commerce.commerceapi.web.dto.*;
 import p2p.commerce.commerceapi.web.model.ProductTransactions;
 import p2p.commerce.commerceapi.web.service.ProductTransactionService;
 
@@ -54,6 +51,11 @@ public class ProductTransactionController {
         return ResponseHelper.ok(productTransactionService.setStatusTransaction(productTransactionId, productTransactionStatusRequest));
     }
 
+    @PreAuthorize("hasAnyAuthority('Seller')")
+    @PutMapping("/approve/{productTransactionId}")
+    public CommonResponse<ProductTransactions> approveTransactionSeller(@PathVariable("productTransactionId") int productTransactionId,@RequestBody ApproveRequest approveRequest) {
+        return ResponseHelper.ok(productTransactionService.approveTransactionSeller(productTransactionId, approveRequest));
+    }
     @PreAuthorize("hasAnyAuthority('Client', 'Seller')")
     @DeleteMapping("/{productTransactionId}")
     public CommonResponse<ProductTransactions> deleteTransaction(@PathVariable("productTransactionId") int productTransactionId) {

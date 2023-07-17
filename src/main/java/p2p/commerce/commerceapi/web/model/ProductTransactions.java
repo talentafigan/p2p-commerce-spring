@@ -46,6 +46,10 @@ public class ProductTransactions extends DateCreate {
     @JoinColumn(name = "canceled_by")
     private Users canceledBy;
 
+    @Lob
+    @Column(name = "note")
+    private String note;
+
     @Column(name = "rating")
     private int rating = 0;
 

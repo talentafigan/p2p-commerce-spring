@@ -7,10 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import p2p.commerce.commerceapi.configuration.async.MainAsync;
 import p2p.commerce.commerceapi.configuration.data.AuthenticationFacade;
 import p2p.commerce.commerceapi.configuration.exception.BussinesException;
-import p2p.commerce.commerceapi.web.dto.ProductTransactionProofRequest;
-import p2p.commerce.commerceapi.web.dto.ProductTransactionRequest;
-import p2p.commerce.commerceapi.web.dto.ProductTransactionStatusRequest;
-import p2p.commerce.commerceapi.web.dto.RatingRequest;
+import p2p.commerce.commerceapi.web.dto.*;
 import p2p.commerce.commerceapi.web.model.*;
 import p2p.commerce.commerceapi.web.repository.*;
 import p2p.commerce.commerceapi.web.service.ProductTransactionService;
@@ -99,6 +96,16 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
                 .client(clients)
                 .build());
     }
+
+    @Transactional
+    @Override
+    public ProductTransactions approveTransactionSeller(int productTransactionId, ApproveRequest approveRequest) {
+        ProductTransactions productTransactions = productTransactionRepository.findById(productTransactionId).orElseThrow(() -> new BussinesException("Product Transaction ID NOT FOUND"));
+        productTransactions.setNote(productTransactions.getNote());
+        if (productTransactions.getProductTransactionStatus().getProductTransactionStatusId() != 1) throw new BussinesException("Transaction has been confirmed");
+        productTransactions.setProductTransactionStatus(productTransactionStatusRepository.findById(2).get());
+        return productTransactionRepository.save(productTransactions);
+    };
 
     @Transactional
     @Override
