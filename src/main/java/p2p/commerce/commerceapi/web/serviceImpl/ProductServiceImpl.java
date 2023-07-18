@@ -86,6 +86,7 @@ public class ProductServiceImpl implements ProductService {
     public Products deleteProduct(int productId) {
         Products products = productRepository.findById(productId).orElseThrow(() -> new BussinesException("PRODUCT ID NOT FOUND"));
         products.setDeleteDate(new Date());
+        products.setStatus(statusRepository.findById(3).get());
         return productRepository.save(products);
     }
 
