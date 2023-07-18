@@ -1,5 +1,6 @@
 package p2p.commerce.commerceapi.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,4 +52,7 @@ public class Products extends DateAll {
     @JoinColumn(name = "status_id", nullable = false)
     private Status status;
 
+    @JsonIgnore
+    @Column(name = "total_transaction")
+    private int totalTransaction = 0;
 }
