@@ -65,10 +65,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Products updateProduct(int productId, ProductRequest productRequest) {
         Products products = productRepository.findById(productId).orElseThrow(() -> new BussinesException("PRODUCT ID NOT FOUND"));
-        products.setProductName(products.getProductName());
+        products.setProductName(productRequest.getProductName());
         products.setProductPrice(productRequest.getProductPrice());
-        products.setImage(products.getImage());
-        products.setProductDescription(products.getProductDescription());
+        products.setImage(productRequest.getImage());
+        products.setProductDescription(productRequest.getProductDescription());
         if (productRequest.getProductCategoryId() != null) {
             products.setProductCategories(productCategoryRepository.findById(productRequest.getProductCategoryId()).orElseThrow(() -> new BussinesException("Product Category ID NOT FOUND")));
         }
