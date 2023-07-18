@@ -101,7 +101,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     @Override
     public ProductTransactions approveTransactionSeller(int productTransactionId, ApproveRequest approveRequest) {
         ProductTransactions productTransactions = productTransactionRepository.findById(productTransactionId).orElseThrow(() -> new BussinesException("Product Transaction ID NOT FOUND"));
-        productTransactions.setNote(productTransactions.getNote());
+        productTransactions.setNote(approveRequest.getNote());
         if (productTransactions.getProductTransactionStatus().getProductTransactionStatusId() != 1) throw new BussinesException("Transaction has been confirmed");
         productTransactions.setProductTransactionStatus(productTransactionStatusRepository.findById(2).get());
         return productTransactionRepository.save(productTransactions);

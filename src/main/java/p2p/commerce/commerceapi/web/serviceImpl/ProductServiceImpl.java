@@ -18,6 +18,7 @@ import p2p.commerce.commerceapi.web.repository.SellesRepository;
 import p2p.commerce.commerceapi.web.repository.StatusRepository;
 import p2p.commerce.commerceapi.web.service.ProductService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Products> findAllProduct(String name, Integer productCategoryId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
+        Users user = authenticationFacade.getAuthentication();
+        if (user.getUserType().getUserTypeName().equals("Seller")) {
+            Sellers seller = sellesRepository.findByUser(user);
+            return productRepository.findAllBySeller(seller.getSellerId(), name, productCategoryId, pageable);
+        }
         if (productCategoryId == null) return productRepository.findAllProductLikeWhere(name, 1, pageable);
         else return productRepository.findAllProductLikeWhereCategory(name, productCategoryId, 1, pageable);
     }
