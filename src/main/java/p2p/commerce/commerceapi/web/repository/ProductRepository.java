@@ -25,4 +25,7 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
     Page<Products> findAllProductLikeWhereCategory(String searchKey, int productCategoryId, int statusId, Pageable pageable);
 
     List<Products> findAllByDeleteDateIsNullAndStatusOrderByRatingDesc(Status status, Pageable pageable);
+
+    List<Products> findAllByDeleteDateIsNullAndSellerOrderByTotalTransactionDesc(Sellers sellers, Pageable pageable);
+    List<Products> findAllByDeleteDateIsNullOrderByTotalTransactionDesc(Pageable pageable);
 }

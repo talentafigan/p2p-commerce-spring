@@ -146,7 +146,13 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
     @Override
     public ProductTransactions setStatusTransaction(int productTransactionId, ProductTransactionStatusRequest productTransactionStatusRequest) {
         ProductTransactions productTransactions = productTransactionRepository.findById(productTransactionId).orElseThrow(() -> new BussinesException("Product Transaction ID NOT FOUND"));
-        productTransactions.setProductTransactionStatus(productTransactionStatusRepository.findById(productTransactionStatusRequest.getProductStatusId()).orElseThrow(() -> new BussinesException("Product Transaction Status ID NOT FOUND")));
+        ProductTransactionStatus status =  productTransactionStatusRepository.findById(productTransactionStatusRequest.getProductStatusId()).orElseThrow(() -> new BussinesException("Product Transaction Status ID NOT FOUND"));
+        productTransactions.setProductTransactionStatus(status);
+        if (status.getProductTransactionStatusId() == 5) {
+            Products products = productTransactions.getProduct();
+            products.setTotalTransaction(products.getTotalTransaction() + 1);
+            productRepository.save(products);
+        }
         return productTransactionRepository.save(productTransactions);
     }
 }

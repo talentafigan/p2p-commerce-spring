@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 import p2p.commerce.commerceapi.configuration.response.CommonResponse;
 import p2p.commerce.commerceapi.configuration.response.ResponseHelper;
 import p2p.commerce.commerceapi.web.dto.AnalyticsAdminResponse;
+import p2p.commerce.commerceapi.web.dto.AnalyticsMostProductResponse;
 import p2p.commerce.commerceapi.web.dto.AnalyticsSellerResponse;
 import p2p.commerce.commerceapi.web.service.AnalyticsService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/analytics")
@@ -21,6 +24,13 @@ public class AnalyticsController {
     @GetMapping("/admin")
     public CommonResponse<AnalyticsAdminResponse> getAnalyticsOverviewAdmin() {
         return ResponseHelper.ok(analyticsService.findAnalyticsAdmin());
+    }
+
+
+    @PreAuthorize("hasAnyAuthority('Admin', 'Seller')")
+    @GetMapping("/most-product")
+    public CommonResponse<List<AnalyticsMostProductResponse>> analyticsMostProduct() {
+        return ResponseHelper.ok(analyticsService.analyticsMostProduct());
     }
 
     @PreAuthorize("hasAuthority('Seller')")
