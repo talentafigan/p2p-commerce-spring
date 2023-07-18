@@ -39,14 +39,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
         if (user.getUserType().getUserTypeName().equals("Seller")) {
             List<ProductTransactions> productTransactions = new ArrayList<>();
             Sellers seller = sellesRepository.findByUser(user);
-            List<Products> listProduct = productRepository.findAllBySeller(seller);
-            for (Products p : listProduct) {
-                var res = productTransactionRepository.findBySeller(p.getProductId(),productName, createDate, productTransactionStatusId);
-                if (res.isPresent()) {
-                    productTransactions.add(res.get());
-                }
-            }
-            return productTransactions;
+            return productTransactionRepository.findAllBySeller(seller.getSellerId(), productName, createDate, productTransactionStatusId);
         } else {
             Clients clients = clientRepository.findByUser(user);
             return  productTransactionRepository.findAllByClient(clients.getClientId(), productName, createDate, productTransactionStatusId);

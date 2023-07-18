@@ -13,8 +13,13 @@ import java.util.Optional;
 
 @Repository
 public interface ProductTransactionRepository extends JpaRepository<ProductTransactions, Integer> {
-    @Query(value = "SELECT a.* FROM product_transactions a INNER JOIN products p on (a.product_id = p.product_id) WHERE LOWER(p.product_name) LIKE LOWER(CONCAT('%', ?2,'%')) AND CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?3, '%') AND a.product_transaction_status_id = COALESCE(?4, a.product_transaction_status_id) AND a.product_id = ?1 LIMIT 1", nativeQuery = true)
-    Optional<ProductTransactions> findBySeller(int productId, String productName,String createDate, Integer productTransactionStatus);
+    @Query(value = "SELECT a.* FROM product_transactions a " +
+            "INNER JOIN products p on (a.product_id =p .product_id) " +
+            "WHERE LOWER(p.product_name) LIKE LOWER(CONCAT('%', ?2,'%')) AND " +
+            "CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?3, '%') AND " +
+            "p.seller_id = ?1 AND " +
+            "a.product_transaction_status_id = COALESCE(?4, a.product_transaction_status_id)", nativeQuery = true)
+    List<ProductTransactions> findAllBySeller(int sellerId, String productName,String createDate, Integer productTransactionStatus);
     @Query(value = "SELECT a.* FROM product_transactions a INNER JOIN products p on (a.product_id = p.product_id) WHERE a.client_id = ?1 AND LOWER(p.product_name) LIKE LOWER(CONCAT('%', ?2,'%')) AND CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?3, '%') AND a.product_transaction_status_id = COALESCE(?4, a.product_transaction_status_id)", nativeQuery = true)
     List<ProductTransactions> findAllByClient(int clients,String productName,String createDate, Integer productTransactionStatus);
     @Query(value = "SELECT a.* FROM product_transactions a INNER JOIN products p on (a.product_id = p.product_id) WHERE LOWER(p.product_name) LIKE LOWER(CONCAT('%', ?1,'%')) AND CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?2, '%') AND a.product_transaction_status_id = COALESCE(?3, a.product_transaction_status_id)", nativeQuery = true)
