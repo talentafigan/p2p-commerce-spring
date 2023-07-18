@@ -42,8 +42,8 @@ public class ProductServiceImpl implements ProductService {
             Sellers seller = sellesRepository.findByUser(user);
             return productRepository.findAllBySeller(seller.getSellerId(), name, productCategoryId, pageable);
         }
-        if (productCategoryId == null) return productRepository.findAllProductLikeWhere(name, 1, pageable);
-        else return productRepository.findAllProductLikeWhereCategory(name, productCategoryId, 1, pageable);
+        if (productCategoryId == null) return productRepository.findAllProductLikeWhere(name, pageable);
+        else return productRepository.findAllProductLikeWhereCategory(name, productCategoryId, pageable);
     }
 
     @Transactional
