@@ -15,14 +15,14 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Products, Integer> {
     List<Products> findAllBySeller(Sellers sellers);
 
-    @Query(value = "SELECT a.* FROM products a inner JOIN sellers s on (a.seller_id = s.seller_id)  WHERE a.seller_id = ?1 AND LOWER(a.product_name) LIKE LOWER(CONCAT('%', ?2,'%')) AND a.deleted_date = null AND  a.product_category_id = COALESCE(?3, a.product_category_id) AND a.status_id = ?3", nativeQuery = true)
-    Page<Products> findAllBySeller(int sellerId, String productName, int productCategory, Pageable pageable);
+    @Query(value = "SELECT a.* FROM products a inner JOIN sellers s on (a.seller_id = s.seller_id)  WHERE a.seller_id = ?1 AND LOWER(a.product_name) LIKE LOWER(CONCAT('%', ?2,'%')) AND a.deleted_date IS NULL AND  a.product_category_id = COALESCE(?3, a.product_category_id) AND a.status_id = ?3", nativeQuery = true)
+    Page<Products> findAllBySeller(int sellerId, String productName, Integer productCategory, Pageable pageable);
 
-    @Query(value = "SELECT a.* FROM products a inner JOIN sellers s on (a.seller_id = s.seller_id)  WHERE (LOWER( a.product_name) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(s.username) LIKE LOWER(CONCAT('%', ?1,'%')) ) AND a.deleted_date = null AND a.status_id = ?2", nativeQuery = true)
+    @Query(value = "SELECT a.* FROM products a inner JOIN sellers s on (a.seller_id = s.seller_id)  WHERE (LOWER( a.product_name) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(s.username) LIKE LOWER(CONCAT('%', ?1,'%')) ) AND a.deleted_date IS NULL AND a.status_id = ?2", nativeQuery = true)
     Page<Products> findAllProductLikeWhere(String searchKey, int statusId, Pageable pageable);
 
-    @Query(value = "SELECT a.* FROM products a inner JOIN sellers s on (a.seller_id = s.seller_id)  WHERE (LOWER(a.product_name) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(s.username) LIKE LOWER(CONCAT('%', ?1,'%')) ) AND a.product_category_id = ?2 AND a.deleted_date = null AND a.status_id = ?3", nativeQuery = true)
-    Page<Products> findAllProductLikeWhereCategory(String searchKey, int productCategoryId, int statusId, Pageable pageable);
+    @Query(value = "SELECT a.* FROM products a inner JOIN sellers s on (a.seller_id = s.seller_id)  WHERE (LOWER(a.product_name) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(s.username) LIKE LOWER(CONCAT('%', ?1,'%')) ) AND a.product_category_id = ?2 AND a.deleted_date IS NULL AND a.status_id = ?3", nativeQuery = true)
+    Page<Products> findAllProductLikeWhereCategory(String searchKey, Integer productCategoryId, int statusId, Pageable pageable);
 
     List<Products> findAllByDeleteDateIsNullAndStatusOrderByRatingDesc(Status status, Pageable pageable);
 
