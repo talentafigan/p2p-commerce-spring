@@ -42,7 +42,7 @@ public class Products extends DateAll {
     private ProductCategories productCategories;
 
     @Column(name = "rating")
-    private int rating;
+    private float rating;
 
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)

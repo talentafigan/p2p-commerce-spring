@@ -47,6 +47,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
 
     }
 
+    @Transactional
     @Override
     public ProductTransactions rating(int productTransactionId, RatingRequest ratingRequest) {
         if (ratingRequest.getRating() < 1 || ratingRequest.getRating() > 5) throw new BussinesException("Rating can only contain 1-5");
@@ -55,6 +56,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
         productTransactions.setRating(ratingRequest.getRating());
         productTransactions.setRatingDesctiption(ratingRequest.getRatingDescription());
         productTransactions = productTransactionRepository.save(productTransactions);
+
         mainAsync.updateRatingProduct();
         return productTransactions;
     }

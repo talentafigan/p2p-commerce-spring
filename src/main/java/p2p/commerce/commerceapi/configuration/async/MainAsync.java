@@ -3,6 +3,7 @@ package p2p.commerce.commerceapi.configuration.async;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import p2p.commerce.commerceapi.web.model.ProductTransactions;
 import p2p.commerce.commerceapi.web.model.Products;
 import p2p.commerce.commerceapi.web.repository.ProductRepository;
@@ -16,27 +17,28 @@ public class MainAsync {
     private ProductTransactionRepository productTransactionRepository;
     private ProductRepository productRepository;
 
+    @Transactional
     @Async
     public void updateRatingProduct() {
         List<Products> products = productRepository.findAll();
         for (Products p : products) {
-            int point1 = 0;
-            int point2 = 0;
-            int point3 = 0;
-            int point4 = 0;
+            float point1 = 0;
+            float point2 = 0;
+            float point3 = 0;
+            float point4 = 0;
             int point5 = 0;
             List<ProductTransactions> productTransactions = productTransactionRepository.findAllByProduct(p);
             for (ProductTransactions p2 : productTransactions) {
                 if (p2.getRating() == 1) {
-                    point1 += 1;
+                    point1 += 1.0;
                 } else if (p2.getRating() == 2) {
-                    point2 += 1;
+                    point2 += 1.0;
                 } else if (p2.getRating() == 3) {
-                    point3 += 1;
+                    point3 += 1.0;
                 } else if (p2.getRating() == 4) {
-                    point4 += 1;
+                    point4 += 1.0;
                 } else if (p2.getRating() == 5) {
-                    point5 += 1;
+                    point5 += 1.0;
                 }
             }
             try {
