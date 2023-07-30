@@ -56,8 +56,7 @@ public class ProductTransactionServiceImpl implements ProductTransactionService 
         productTransactions.setRating(ratingRequest.getRating());
         productTransactions.setRatingDesctiption(ratingRequest.getRatingDescription());
         productTransactions = productTransactionRepository.save(productTransactions);
-
-        mainAsync.updateRatingProduct();
+        mainAsync.updateRatingProduct(productTransactions.getProduct());
         return productTransactions;
     }
 

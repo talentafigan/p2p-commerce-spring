@@ -59,7 +59,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     @Transactional(readOnly = true)
     @Override
     public List<Consultations> findAllConsultation() {
-        return consultationRepository.findAll();
+        return consultationRepository.findAllByOrderByCreateDateDesc();
     }
 
     @Transactional(readOnly = true)

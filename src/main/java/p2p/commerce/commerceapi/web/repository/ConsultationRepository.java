@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface ConsultationRepository extends JpaRepository<Consultations, Integer> {
     Boolean existsByConversationIdAndStatus(String conversationId, Status status);
 
-
+    List<Consultations> findAllByOrderByCreateDateDesc();
     List<Consultations> findAllByCreateDateBefore(Date date);
     @Query(value = "SELECT COUNT(a) FROM consultations a WHERE CAST(a.created_date AS VARCHAR) LIKE CONCAT('', ?1 , '%')", nativeQuery = true)
     long countSubConsultant(String date);
