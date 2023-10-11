@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "code_otp")
 public class CodeOtp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
